@@ -1,0 +1,121 @@
+{
+  "sources": {
+    "note": "Every fact below is traceable to a source. Verified = confirmed by a public profile or document. Needs confirmation = could not be verified automatically.",
+    "github_profile": "https://github.com/MonarchSharma20502",
+    "github_api_user": "https://api.github.com/users/MonarchSharma20502",
+    "github_api_repos": "https://api.github.com/users/MonarchSharma20502/repos?per_page=100&sort=updated",
+    "github_profile_readme": "https://github.com/MonarchSharma20502/MonarchSharma20502/blob/main/README.md",
+    "linkedin_profile": "https://www.linkedin.com/in/monarch-sharma-3053a4248/",
+    "resume": "Monarch Resume.pdf (scanned image, no text layer - content not machine readable)",
+    "resume_image": "Resume/resume.png (image, not readable in this session)"
+  },
+  "identity": {
+    "name": { "value": "Monarch Sharma", "source": "github_api_user.name (all caps) + github_profile_readme", "verified": true },
+    "username": { "value": "MonarchSharma20502", "source": "github_api_user.login", "verified": true },
+    "headline": { "value": "Cloud and DevOps Enthusiast | Kubernetes, Claude Code, Containerization, Web Dev, Tech Explorer, Microsoft Azure, Azure DevOps", "source": "github_api_user.bio", "verified": true },
+    "role": { "value": "Cloud / DevOps Engineer", "source": "github_profile_readme whoami block", "verified": true },
+    "company": { "value": "SEPL", "source": "github_api_user.company", "verified": true },
+    "location": { "value": "Jaipur, India", "source": "github_api_user.location (JAIPUR)", "verified": true },
+    "email": { "value": "monarchsharma.m20@gmail.com", "source": "github_profile_readme 'Let's Connect' + git config user.email", "verified": true },
+    "avatar": { "value": "https://avatars.githubusercontent.com/u/110128950?v=4", "source": "github_api_user.avatar_url", "verified": true },
+    "github": { "value": "https://github.com/MonarchSharma20502", "source": ".env github_url", "verified": true },
+    "linkedin": { "value": "https://www.linkedin.com/in/monarch-sharma-3053a4248/", "source": ".env linkedin_url", "verified": true },
+    "hireable": { "value": true, "source": "github_api_user.hireable", "verified": true },
+    "github_joined": { "value": "2022-07-27", "source": "github_api_user.created_at", "verified": true }
+  },
+  "stats": {
+    "public_repos": { "value": 14, "source": "github_api_user.public_repos", "verified": true },
+    "followers": { "value": 7, "source": "github_api_user.followers", "verified": true },
+    "following": { "value": 4, "source": "github_api_user.following", "verified": true },
+    "contributions_last_year": { "value": 118, "source": "github_profile contribution graph", "verified": true },
+    "achievements": { "value": ["YOLO", "Pull Shark"], "source": "github_profile achievements", "verified": true }
+  },
+  "about": {
+    "value": "Cloud / DevOps engineer focused on Microsoft Azure, Infrastructure as Code, Kubernetes and automation. I enjoy working at the intersection of cloud infrastructure, automation, containers and DevOps. My repositories are a mix of infrastructure automation, Kubernetes projects, CI/CD demonstrations, application deployments, and experiments that help me understand how systems work from the ground up.",
+    "source": "github_profile_readme whoami + intro",
+    "verified": true
+  },
+  "focus": {
+    "value": ["Microsoft Azure", "Infrastructure as Code", "Kubernetes", "Containerization", "CI/CD", "Cloud Automation"],
+    "source": "github_profile_readme whoami.focus",
+    "verified": true
+  },
+  "currently_exploring": {
+    "value": ["Cloud", "Kubernetes", "Terraform", "Containers", "CI/CD", "AI-assisted Development"],
+    "source": "github_profile_readme 'Currently Exploring'",
+    "verified": true
+  },
+  "mindset": {
+    "value": "Build -> Break -> Debug -> Automate -> Repeat",
+    "source": "github_profile_readme whoami.mindset",
+    "verified": true
+  },
+  "learning_philosophy": {
+    "value": "Don't just learn the command. Understand what happens behind it.",
+    "source": "github_profile_readme 'Learning Philosophy'",
+    "verified": true
+  },
+  "quote": {
+    "value": "Infrastructure should be reproducible. Deployments should be automated.",
+    "source": "github_profile_readme footer quote",
+    "verified": true
+  },
+  "skills": {
+    "value": {
+      "Cloud & Infrastructure": ["Microsoft Azure", "Azure DevOps", "Terraform (IaC)", "Cloud Networking", "Cloud & Identity Security"],
+      "Containers & Orchestration": ["Docker", "Kubernetes", "Minikube", "Helm"],
+      "CI/CD & DevOps": ["GitHub Actions", "Jenkins", "CI/CD Pipelines", "Infrastructure Automation"],
+      "Languages": ["Python", "Go", "JavaScript", "TypeScript", "HTML", "CSS", "HCL"],
+      "Tools & Platforms": ["Git", "GitHub", "Linux", "MongoDB", "Mongo Express"],
+      "AI Tooling": ["Claude Code", "AI-assisted Development"]
+    },
+    "source": "github_api_user.bio + github_profile_readme skill icon rows + repo languages",
+    "verified": true
+  },
+  "featured_projects": {
+    "source": "github_profile_readme 'Featured Projects' + github_api_repos",
+    "verified": true,
+    "value": [
+      {
+        "name": "K8S-Mongo-Application",
+        "description": "MongoDB + Mongo Express application deployed on a Kubernetes cluster using Minikube.",
+        "tech": ["Kubernetes", "MongoDB", "Mongo Express", "Deployments", "Services", "Secrets", "ConfigMaps", "Minikube"],
+        "repo": "https://github.com/MonarchSharma20502/K8S-Mongo-Application",
+        "created": "2026-07-30",
+        "updated": "2026-08-24"
+      },
+      {
+        "name": "Automation-in-Terraform",
+        "description": "Terraform automation modules for different IaaS and PaaS resources in Azure infrastructure.",
+        "tech": ["Terraform", "Azure", "IaC", "Infrastructure Automation"],
+        "repo": "https://github.com/MonarchSharma20502/Automation-in-Terraform",
+        "created": "2026-02-08",
+        "updated": "2026-07-08"
+      },
+      {
+        "name": "DevOps-Pipeline-Demonstration",
+        "description": "A practical project exploring DevOps pipeline concepts and application delivery.",
+        "tech": ["DevOps", "CI/CD", "Automation", "Application Delivery"],
+        "repo": "https://github.com/MonarchSharma20502/DevOps-Pipeline-Demonstration",
+        "created": "2026-05-06",
+        "updated": "2026-05-08"
+      }
+    ]
+  },
+  "other_repos": {
+    "source": "github_api_repos",
+    "verified": true,
+    "value": [
+      { "name": "Jenkins-k8s-Project", "description": "A project combining Jenkins and Kubernetes concepts.", "language": null, "repo": "https://github.com/MonarchSharma20502/Jenkins-k8s-Project" },
+      { "name": "go-lang-web-application-devops", "description": "Web application project for exploring application development and DevOps practices.", "language": "HTML", "repo": "https://github.com/MonarchSharma20502/go-lang-web-application-devops" },
+      { "profile_readme_note": "Jenkins-k8s-Project appears in the profile README featured list but was not returned by the repos API on this fetch; it is listed in the profile README." }
+    ]
+  },
+  "needs_confirmation": [
+    "Work experience: company names, titles and dates (resume is a scanned image; LinkedIn requires login to read).",
+    "Education: institution, degree and dates.",
+    "Certifications: names, issuers and dates.",
+    "Phone number: not found in any source - not published.",
+    "Whether the email monarchsharma.m20@gmail.com may be published publicly on the site (it is currently public on the GitHub profile README)."
+  ]
+}

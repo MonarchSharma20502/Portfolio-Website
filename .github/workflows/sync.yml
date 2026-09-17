@@ -1,0 +1,45 @@
+name: Auto-sync profile
+
+on:
+  # Refresh every day at 06:00 UTC and whenever the workflow is run manually.
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+# Auto-commits use the built-in GITHUB_TOKEN, scoped to this repo.
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Refresh profile.json from GitHub (and LinkedIn if configured)
+        working-directory: portfolio
+        env:
+          GITHUB_USERNAME: MonarchSharma20502
+          # Optional: raises the GitHub API rate limit from 60 to 5000/hr.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Optional: raw URL to an exported LinkedIn JSON profile.
+          LINKEDIN_JSON_URL: ${{ secrets.LINKEDIN_JSON_URL }}
+        run: node scripts/sync-profile.mjs
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet portfolio/data/profile.json; then
+            echo "No changes to commit."
+          else
+            git add portfolio/data/profile.json
+            git commit -m "chore(data): auto-sync profile from GitHub/LinkedIn [skip ci]"
+            git push
+          fi
