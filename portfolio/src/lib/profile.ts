@@ -69,5 +69,5 @@ export type Profile = {
 
 export const profile: Profile = {
   ...profileData,
-  siteUrl: "https://monarchsharma20502.github.io",
+  siteUrl: "https://monarchsharma20502.github.io/Portfolio-Website",
 };

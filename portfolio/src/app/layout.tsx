@@ -16,7 +16,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://monarchsharma20502.github.io"),
+  metadataBase: new URL("https://monarchsharma20502.github.io/Portfolio-Website"),
   title: `${profile.name} — ${profile.role}`,
   description: profile.headline,
   keywords: [
