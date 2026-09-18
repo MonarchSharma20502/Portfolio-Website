@@ -67,6 +67,21 @@
     { "name": "4-in-a-row-graphics", "description": "A 4-in-a-row game with graphics built using the Pygame library for Python.", "tech": ["Python", "Pygame"], "repo": "https://github.com/MonarchSharma20502/4-in-a-row-graphics", "featured": false },
     { "name": "Tic---Tac---Toe", "description": "A classic Tic-Tac-Toe game implemented in Python.", "tech": ["Python"], "repo": "https://github.com/MonarchSharma20502/Tic---Tac---Toe", "featured": false }
   ],
-  "education": [],
-  "certifications": []
+  "education": [
+    {
+      "institution": "JIET (Jodhpur Institute of Engineering and Technology)",
+      "location": "Jodhpur, Rajasthan, India",
+      "degree": "",
+      "start": "2021",
+      "end": "2025",
+      "current": false
+    }
+  ],
+  "certifications": [
+    "AZ-900 — Microsoft Azure Fundamentals",
+    "AZ-204 — Developing Solutions for Microsoft Azure",
+    "AZ-104 — Microsoft Azure Administrator",
+    "AZ-305 — Designing Microsoft Azure Infrastructure Solutions",
+    "SAS Visual Analytics"
+  ]
 }

@@ -17,6 +17,16 @@ dist/
 .env*.local
 .env.example
 
+# Build logs / scratch output
+build-*.log
+build.log
+*.log
+
+# Local helper scripts
+cleanup*.ps1
+probe*.ps1
+build-task.ps1
+
 # Misc
 .DS_Store
 *.pem

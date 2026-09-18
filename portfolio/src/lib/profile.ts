@@ -17,9 +17,11 @@ export type Experience = {
 
 export type Education = {
   institution: string;
-  degree: string;
+  location?: string;
+  degree?: string;
   start: string;
   end: string | null;
+  current?: boolean;
 };
 
 export type Project = {
