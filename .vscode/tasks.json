@@ -2,312 +2,118 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "git-status-check",
+			"label": "dev",
+			"detail": "Start the Next.js dev server on http://localhost:3000",
 			"type": "shell",
-			"command": "powershell",
+			"command": "npm",
 			"args": [
-				"-Command",
-				"Set-Location 'C:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website'; git status --short"
+				"run",
+				"dev"
 			],
-			"group": "build"
-		},
-		{
-			"label": "probe-git",
-			"type": "shell",
-			"command": "powershell",
-			"args": [
-				"-ExecutionPolicy",
-				"Bypass",
-				"-File",
-				"C:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\probe.ps1"
-			],
-			"group": "build"
-		},
-		{
-			"label": "run-build",
-			"type": "shell",
-			"command": "powershell",
-			"args": [
-				"-ExecutionPolicy",
-				"Bypass",
-				"-File",
-				"C:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\build-task.ps1"
-			],
-			"isBackground": false,
+			"options": {
+				"cwd": "${workspaceFolder}/portfolio"
+			},
+			"isBackground": true,
 			"problemMatcher": [],
 			"group": "build"
 		},
 		{
-			"label": "run-build2",
+			"label": "build",
+			"detail": "Static export into portfolio/out",
 			"type": "shell",
-			"command": "powershell",
+			"command": "npm",
 			"args": [
-				"-ExecutionPolicy",
-				"Bypass",
-				"-File",
-				"C:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\build-task.ps1"
+				"run",
+				"build"
 			],
-			"isBackground": false,
+			"options": {
+				"cwd": "${workspaceFolder}/portfolio"
+			},
+			"problemMatcher": [
+				"$tsc"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
+			"label": "lint",
+			"detail": "Run ESLint",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"lint"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/portfolio"
+			},
+			"problemMatcher": [
+				"$eslint-stylish"
+			],
+			"group": "build"
+		},
+		{
+			"label": "sync profile",
+			"detail": "Refresh profile.json from the GitHub API (add -- --dry-run to preview)",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"sync"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/portfolio"
+			},
 			"problemMatcher": [],
 			"group": "build"
 		},
 		{
-			"label": "run-build3",
+			"label": "git status",
+			"detail": "Show the working tree status",
 			"type": "shell",
-			"command": "powershell",
+			"command": "git",
 			"args": [
-				"-ExecutionPolicy",
-				"Bypass",
-				"-File",
-				"C:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\build-task.ps1"
+				"status",
+				"--short"
 			],
-			"isBackground": false,
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
 			"problemMatcher": [],
 			"group": "build"
 		},
 		{
-			"label": "run-build4",
+			"label": "commit and push",
+			"detail": "Stage all changes, commit and push to origin main",
 			"type": "shell",
-			"command": "powershell",
+			"command": "git",
 			"args": [
-				"-ExecutionPolicy",
-				"Bypass",
-				"-File",
-				"C:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\build-task.ps1"
+				"commit",
+				"-am",
+				"chore: update portfolio content",
+				"&&",
+				"git",
+				"push",
+				"origin",
+				"main"
 			],
-			"isBackground": false,
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
 			"problemMatcher": [],
 			"group": "build"
 		},
 		{
-			"label": "run-build-verify",
+			"label": "push portable tasks.json",
 			"type": "shell",
 			"command": "powershell",
 			"args": [
 				"-ExecutionPolicy",
 				"Bypass",
 				"-File",
-				"C:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\build-task.ps1"
-			],
-			"isBackground": false,
-			"problemMatcher": [],
-			"group": "build"
-		},
-		{
-			"label": "probe-out",
-			"type": "shell",
-			"command": "powershell",
-			"args": [
-				"-ExecutionPolicy",
-				"Bypass",
-				"-File",
-				"C:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\probe-out.ps1"
-			],
-			"isBackground": false,
-			"problemMatcher": [],
-			"group": "build"
-		},
-		{
-			"label": "probe-out2",
-			"type": "shell",
-			"command": "powershell",
-			"args": [
-				"-ExecutionPolicy",
-				"Bypass",
-				"-File",
-				"C:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\probe-out.ps1"
-			],
-			"isBackground": false,
-			"problemMatcher": [],
-			"group": "build"
-		},
-		{
-			"label": "cleanup",
-			"type": "shell",
-			"command": "powershell",
-			"args": [
-				"-ExecutionPolicy",
-				"Bypass",
-				"-File",
-				"C:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\cleanup.ps1"
-			],
-			"isBackground": false,
-			"problemMatcher": [],
-			"group": "build"
-		},
-		{
-			"label": "cleanup2",
-			"type": "shell",
-			"command": "powershell",
-			"args": [
-				"-ExecutionPolicy",
-				"Bypass",
-				"-File",
-				"C:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\cleanup2.ps1"
-			],
-			"isBackground": false,
-			"problemMatcher": [],
-			"group": "build"
-		},
-		{
-			"label": "cleanup3",
-			"type": "shell",
-			"command": "powershell",
-			"args": [
-				"-ExecutionPolicy",
-				"Bypass",
-				"-File",
-				"C:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\cleanup3.ps1"
-			],
-			"isBackground": false,
-			"problemMatcher": [],
-			"group": "build"
-		},
-		{
-			"label": "cleanup4",
-			"type": "shell",
-			"command": "powershell",
-			"args": [
-				"-ExecutionPolicy",
-				"Bypass",
-				"-File",
-				"C:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\cleanup4.ps1"
-			],
-			"isBackground": false,
-			"problemMatcher": [],
-			"group": "build"
-		},
-		{
-			"label": "final-check",
-			"type": "shell",
-			"command": "powershell",
-			"args": [
-				"-ExecutionPolicy",
-				"Bypass",
-				"-File",
-				"C:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\final-check.ps1"
-			],
-			"isBackground": false,
-			"problemMatcher": [],
-			"group": "build"
-		},
-		{
-			"label": "build-check",
-			"type": "shell",
-			"command": "powershell",
-			"args": [
-				"-ExecutionPolicy",
-				"Bypass",
-				"-File",
-				"C:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\build-check.ps1"
-			],
-			"isBackground": false,
-			"problemMatcher": [],
-			"group": "build"
-		},
-		{
-			"label": "build-check2",
-			"type": "shell",
-			"command": "powershell",
-			"args": [
-				"-ExecutionPolicy",
-				"Bypass",
-				"-File",
-				"C:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\build-check.ps1"
-			],
-			"isBackground": false,
-			"problemMatcher": [],
-			"group": "build"
-		},
-		{
-			"label": "build-final2",
-			"type": "shell",
-			"command": "powershell",
-			"args": [
-				"-ExecutionPolicy",
-				"Bypass",
-				"-File",
-				"C:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\build-check.ps1"
-			],
-			"isBackground": false,
-			"problemMatcher": [],
-			"group": "build"
-		},
-		{
-			"label": "watch-deploy",
-			"type": "shell",
-			"command": "powershell",
-			"args": [
-				"-ExecutionPolicy",
-				"Bypass",
-				"-File",
-				"C:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\watch-deploy.ps1"
-			],
-			"isBackground": false,
-			"problemMatcher": [],
-			"group": "build"
-		},
-		{
-			"label": "verify-live",
-			"type": "shell",
-			"command": "powershell",
-			"args": [
-				"-ExecutionPolicy",
-				"Bypass",
-				"-File",
-				"C:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\verify-live.ps1"
-			],
-			"isBackground": false,
-			"problemMatcher": [],
-			"group": "build"
-		},
-		{
-			"label": "cleanup-final",
-			"type": "shell",
-			"command": "powershell",
-			"args": [
-				"-ExecutionPolicy",
-				"Bypass",
-				"-File",
-				"C:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\cleanup-final.ps1"
-			],
-			"isBackground": false,
-			"problemMatcher": [],
-			"group": "build"
-		},
-		{
-			"label": "commit and push README",
-			"type": "shell",
-			"command": "powershell",
-			"args": [
-				"-ExecutionPolicy",
-				"Bypass",
-				"-File",
-				"commit-readme.ps1"
-			],
-			"group": "build"
-		},
-		{
-			"label": "verify push and cleanup",
-			"type": "shell",
-			"command": "powershell",
-			"args": [
-				"-ExecutionPolicy",
-				"Bypass",
-				"-File",
-				"verify-push.ps1"
-			],
-			"group": "build"
-		},
-		{
-			"label": "push tasks.json",
-			"type": "shell",
-			"command": "powershell",
-			"args": [
-				"-ExecutionPolicy",
-				"Bypass",
-				"-File",
-				"push-tasks.ps1"
+				"push-tasks2.ps1"
 			],
 			"group": "build"
 		}
