@@ -4,8 +4,8 @@
   "role": "Cloud / DevOps Engineer",
   "headline": "Cloud & DevOps Enthusiast — Kubernetes • Terraform • Azure • Containerization • CI/CD",
   "tagline": "I build and automate cloud infrastructure so deployments are reproducible, predictable and boring (in the best way).",
-  "location": "Jaipur, India",
-  "company": "SEPL",
+  "location": "Jaipur",
+  "company": "Sepl",
   "email": "monarchsharma.m20@gmail.com",
   "avatar": "/Portfolio-Website/avatar.png",
   "hireable": true,
@@ -20,25 +20,93 @@
     "Cloud / DevOps engineer focused on Microsoft Azure, Infrastructure as Code, Kubernetes and automation. I work at the intersection of cloud infrastructure, automation, containers and DevOps.",
     "My repositories are a mix of infrastructure automation, Kubernetes projects, CI/CD demonstrations, application deployments and experiments that help me understand how systems work from the ground up."
   ],
-  "focus": ["Microsoft Azure", "Infrastructure as Code", "Kubernetes", "Containerization", "CI/CD", "Cloud Automation"],
-  "currentlyLearning": ["Cloud", "Kubernetes", "Terraform", "Containers", "CI/CD", "AI-assisted Development"],
+  "focus": [
+    "Microsoft Azure",
+    "Infrastructure as Code",
+    "Kubernetes",
+    "Containerization",
+    "CI/CD",
+    "Cloud Automation"
+  ],
+  "currentlyLearning": [
+    "Cloud",
+    "Kubernetes",
+    "Terraform",
+    "Containers",
+    "CI/CD",
+    "AI-assisted Development"
+  ],
   "mindset": "Build → Break → Debug → Automate → Repeat",
   "philosophy": "Don't just learn the command. Understand what happens behind it.",
   "quote": "Infrastructure should be reproducible. Deployments should be automated.",
   "stats": {
-    "publicRepos": 14,
-    "followers": 7,
+    "publicRepos": 15,
+    "followers": 8,
     "following": 4,
     "contributionsLastYear": 118,
-    "achievements": ["YOLO", "Pull Shark"]
+    "achievements": [
+      "YOLO",
+      "Pull Shark"
+    ]
   },
   "skills": [
-    { "category": "Cloud & Infrastructure", "items": ["Microsoft Azure", "Azure DevOps", "Terraform (IaC)", "Cloud Networking", "Cloud & Identity Security"] },
-    { "category": "Containers & Orchestration", "items": ["Docker", "Kubernetes", "Minikube", "Helm"] },
-    { "category": "CI/CD & DevOps", "items": ["GitHub Actions", "Jenkins", "CI/CD Pipelines", "Infrastructure Automation"] },
-    { "category": "Languages", "items": ["Python", "Go", "JavaScript", "TypeScript", "HTML", "CSS", "HCL"] },
-    { "category": "Tools & Platforms", "items": ["Git", "GitHub", "Linux", "MongoDB", "Mongo Express"] },
-    { "category": "AI Tooling", "items": ["Claude Code", "AI-assisted Development"] }
+    {
+      "category": "Cloud & Infrastructure",
+      "items": [
+        "Microsoft Azure",
+        "Azure DevOps",
+        "Terraform (IaC)",
+        "Cloud Networking",
+        "Cloud & Identity Security"
+      ]
+    },
+    {
+      "category": "Containers & Orchestration",
+      "items": [
+        "Docker",
+        "Kubernetes",
+        "Minikube",
+        "Helm"
+      ]
+    },
+    {
+      "category": "CI/CD & DevOps",
+      "items": [
+        "GitHub Actions",
+        "Jenkins",
+        "CI/CD Pipelines",
+        "Infrastructure Automation"
+      ]
+    },
+    {
+      "category": "Languages",
+      "items": [
+        "Python",
+        "Go",
+        "JavaScript",
+        "TypeScript",
+        "HTML",
+        "CSS",
+        "HCL"
+      ]
+    },
+    {
+      "category": "Tools & Platforms",
+      "items": [
+        "Git",
+        "GitHub",
+        "Linux",
+        "MongoDB",
+        "Mongo Express"
+      ]
+    },
+    {
+      "category": "AI Tooling",
+      "items": [
+        "Claude Code",
+        "AI-assisted Development"
+      ]
+    }
   ],
   "experience": [
     {
@@ -56,16 +124,137 @@
     }
   ],
   "projects": [
-    { "name": "K8S-Mongo-Application", "description": "MongoDB + Mongo Express application deployed on a Kubernetes cluster using Minikube. Covers Deployments, Services, Secrets and ConfigMaps.", "tech": ["Kubernetes", "MongoDB", "Mongo Express", "Minikube", "Secrets", "ConfigMaps"], "repo": "https://github.com/MonarchSharma20502/K8S-Mongo-Application", "featured": true },
-    { "name": "Automation-in-Terraform", "description": "Terraform automation modules for different IaaS and PaaS resources in Azure infrastructure.", "tech": ["Terraform", "Azure", "IaC", "Infrastructure Automation"], "repo": "https://github.com/MonarchSharma20502/Automation-in-Terraform", "featured": true },
-    { "name": "DevOps-Pipeline-Demonstration", "description": "A practical project exploring DevOps pipeline concepts and application delivery.", "tech": ["DevOps", "CI/CD", "Automation", "Application Delivery"], "repo": "https://github.com/MonarchSharma20502/DevOps-Pipeline-Demonstration", "featured": true },
-    { "name": "Jenkins-k8s-Project", "description": "A project combining Jenkins and Kubernetes concepts for automated build and deployment.", "tech": ["Jenkins", "Kubernetes", "CI/CD", "Automation"], "repo": "https://github.com/MonarchSharma20502/Jenkins-k8s-Project", "featured": true },
-    { "name": "go-lang-web-application-devops", "description": "Web application project for exploring application development and DevOps practices.", "tech": ["Go", "Web Application", "Docker", "Kubernetes", "DevOps"], "repo": "https://github.com/MonarchSharma20502/go-lang-web-application-devops", "featured": false },
-    { "name": "V-Profile-Project", "description": "Multi-tier web application stack built and delivered through a DevOps pipeline.", "tech": ["Linux", "DevOps", "CI/CD", "Automation"], "repo": "https://github.com/MonarchSharma20502/V-Profile-Project", "featured": false },
-    { "name": "Todo-Jenkins", "description": "A Python to-do application used to practice Jenkins-driven CI/CD.", "tech": ["Python", "Jenkins", "CI/CD"], "repo": "https://github.com/MonarchSharma20502/Todo-Jenkins", "featured": false },
-    { "name": "Spiral-Animation-Python", "description": "A colorful spiral animation generated with the Turtle graphics package in Python 3.", "tech": ["Python", "Turtle"], "repo": "https://github.com/MonarchSharma20502/Spiral-Animation-Python", "featured": false },
-    { "name": "4-in-a-row-graphics", "description": "A 4-in-a-row game with graphics built using the Pygame library for Python.", "tech": ["Python", "Pygame"], "repo": "https://github.com/MonarchSharma20502/4-in-a-row-graphics", "featured": false },
-    { "name": "Tic---Tac---Toe", "description": "A classic Tic-Tac-Toe game implemented in Python.", "tech": ["Python"], "repo": "https://github.com/MonarchSharma20502/Tic---Tac---Toe", "featured": false }
+    {
+      "name": "K8S-Mongo-Application",
+      "description": "MongoDB + Mongo Express application deployed on a Kubernetes cluster using Minikube. Covers Deployments, Services, Secrets and ConfigMaps.",
+      "tech": [
+        "Kubernetes",
+        "MongoDB",
+        "Mongo Express",
+        "Minikube",
+        "Secrets",
+        "ConfigMaps"
+      ],
+      "repo": "https://github.com/MonarchSharma20502/K8S-Mongo-Application",
+      "featured": true
+    },
+    {
+      "name": "Automation-in-Terraform",
+      "description": "Terraform automation modules for different IaaS and PaaS resources in Azure infrastructure.",
+      "tech": [
+        "Terraform",
+        "Azure",
+        "IaC",
+        "Infrastructure Automation"
+      ],
+      "repo": "https://github.com/MonarchSharma20502/Automation-in-Terraform",
+      "featured": true
+    },
+    {
+      "name": "DevOps-Pipeline-Demonstration",
+      "description": "A practical project exploring DevOps pipeline concepts and application delivery.",
+      "tech": [
+        "DevOps",
+        "CI/CD",
+        "Automation",
+        "Application Delivery"
+      ],
+      "repo": "https://github.com/MonarchSharma20502/DevOps-Pipeline-Demonstration",
+      "featured": true
+    },
+    {
+      "name": "Jenkins-k8s-Project",
+      "description": "A project combining Jenkins and Kubernetes concepts for automated build and deployment.",
+      "tech": [
+        "Jenkins",
+        "Kubernetes",
+        "CI/CD",
+        "Automation"
+      ],
+      "repo": "https://github.com/MonarchSharma20502/Jenkins-k8s-Project",
+      "featured": true
+    },
+    {
+      "name": "go-lang-web-application-devops",
+      "description": "Web application project for exploring application development and DevOps practices.",
+      "tech": [
+        "Go",
+        "Web Application",
+        "Docker",
+        "Kubernetes",
+        "DevOps"
+      ],
+      "repo": "https://github.com/MonarchSharma20502/go-lang-web-application-devops",
+      "featured": false
+    },
+    {
+      "name": "V-Profile-Project",
+      "description": "Multi-tier web application stack built and delivered through a DevOps pipeline.",
+      "tech": [
+        "Linux",
+        "DevOps",
+        "CI/CD",
+        "Automation"
+      ],
+      "repo": "https://github.com/MonarchSharma20502/V-Profile-Project",
+      "featured": false
+    },
+    {
+      "name": "Todo-Jenkins",
+      "description": "A Python to-do application used to practice Jenkins-driven CI/CD.",
+      "tech": [
+        "Python",
+        "Jenkins",
+        "CI/CD"
+      ],
+      "repo": "https://github.com/MonarchSharma20502/Todo-Jenkins",
+      "featured": false
+    },
+    {
+      "name": "Spiral-Animation-Python",
+      "description": "A colorful spiral animation generated with the Turtle graphics package in Python 3.",
+      "tech": [
+        "Python",
+        "Turtle"
+      ],
+      "repo": "https://github.com/MonarchSharma20502/Spiral-Animation-Python",
+      "featured": false
+    },
+    {
+      "name": "4-in-a-row-graphics",
+      "description": "A 4-in-a-row game with graphics built using the Pygame library for Python.",
+      "tech": [
+        "Python",
+        "Pygame"
+      ],
+      "repo": "https://github.com/MonarchSharma20502/4-in-a-row-graphics",
+      "featured": false
+    },
+    {
+      "name": "Tic---Tac---Toe",
+      "description": "A classic Tic-Tac-Toe game implemented in Python.",
+      "tech": [
+        "Python"
+      ],
+      "repo": "https://github.com/MonarchSharma20502/Tic---Tac---Toe",
+      "featured": false
+    },
+    {
+      "name": "MonarchSharma20502",
+      "description": "About Me",
+      "tech": [],
+      "repo": "https://github.com/MonarchSharma20502/MonarchSharma20502",
+      "featured": false
+    },
+    {
+      "name": "Portfolio-Website",
+      "description": "This is my Portfolio Website",
+      "tech": [
+        "TypeScript"
+      ],
+      "repo": "https://github.com/MonarchSharma20502/Portfolio-Website",
+      "featured": false
+    }
   ],
   "education": [
     {
