@@ -3,6 +3,12 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { profile } from "@/lib/profile";
 
+// profile.avatar is site-absolute ("/Portfolio-Website/avatar.png"). Next.js
+// prepends basePath to relative metadata image URLs and then resolves them
+// against metadataBase, which would double the prefix and 404 in link previews.
+// A full absolute URL is used verbatim instead.
+const avatarUrl = `${profile.siteUrl}${profile.avatar}`;
+
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
@@ -39,13 +45,17 @@ export const metadata: Metadata = {
     title: `${profile.name} — ${profile.role}`,
     description: profile.headline,
     siteName: `${profile.name} Portfolio`,
-    images: [{ url: profile.avatar }],
+    // profile.avatar is site-absolute ("/Portfolio-Website/avatar.png"). Next.js
+    // prepends basePath to relative metadata URLs and then resolves them against
+    // metadataBase, which would double the prefix and 404 in link previews.
+    // Building a full absolute URL makes Next use it verbatim instead.
+    images: [{ url: avatarUrl }],
   },
   twitter: {
     card: "summary_large_image",
     title: `${profile.name} — ${profile.role}`,
     description: profile.headline,
-    images: [profile.avatar],
+    images: [avatarUrl],
   },
   robots: { index: true, follow: true },
 };
@@ -60,7 +70,7 @@ export default function RootLayout({
     "@type": "Person",
     name: profile.name,
     url: profile.siteUrl,
-    image: profile.avatar,
+    image: avatarUrl,
     jobTitle: profile.role,
     email: `mailto:${profile.email}`,
     address: {
