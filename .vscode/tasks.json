@@ -106,14 +106,14 @@
 			"group": "build"
 		},
 		{
-			"label": "push portable tasks.json",
+			"label": "commit tasks.json",
 			"type": "shell",
 			"command": "powershell",
 			"args": [
 				"-ExecutionPolicy",
 				"Bypass",
 				"-File",
-				"push-tasks2.ps1"
+				"commit-tasks.ps1"
 			],
 			"group": "build"
 		}
