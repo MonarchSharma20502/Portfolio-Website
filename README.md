@@ -150,7 +150,82 @@ The site will then be live at `https://monarchsharma20502.github.io/<repo-name>`
 
 ---
 
-## 6. Where the data came from
+## 6. How the CI/CD pipeline works (in detail)
+
+A plain-English walkthrough of what runs, where, and when.
+
+### Where does it run? (Not Docker)
+
+Both workflows run on **GitHub-hosted `ubuntu-latest` runners** — ephemeral virtual machines that
+GitHub provisions on demand and destroys as soon as the job finishes. There is **no Docker container,
+no self-hosted server and no process running on your laptop**; nothing needs to be kept online.
+
+The **deployment target** is **GitHub Pages**, GitHub's free static-site hosting. Because the repo is
+configured with **Source: GitHub Actions** (`build_type: workflow`), the workflow needs the
+`pages: write` and `id-token: write` permissions defined at the top of `deploy.yml` and uses the
+official `actions/deploy-pages@v4` action to publish.
+
+### When does it trigger?
+
+| Workflow | Trigger | Defined in |
+|----------|---------|------------|
+| `deploy.yml` | Every **push to `main`**, plus manual **Run workflow** | `.github/workflows/deploy.yml` |
+| `sync.yml` | **Cron `0 6 * * *`** (daily at 06:00 UTC), plus manual **Run workflow** | `.github/workflows/sync.yml` |
+
+`deploy.yml` also declares a `concurrency` group named `pages` with `cancel-in-progress: true`, so if
+you push twice in quick succession the older run is cancelled and only the newest code is published.
+
+### How does it detect changes?
+
+Two completely different mechanisms:
+
+1. **Deploy pipeline — event-driven.** GitHub fires a `push` webhook the instant commits land on `main`.
+   There is no polling and no diffing; the build starts immediately. This is why a normal
+   `git push` is all you ever need to publish.
+2. **Sync pipeline — scheduled, then a git diff.** `sync.yml` wakes up at 06:00 UTC, refreshes
+   `profile.json` from the GitHub API, and then explicitly checks whether the file actually changed:
+   ```yaml
+   if git diff --quiet portfolio/data/profile.json; then
+     echo "No changes to commit."
+   else
+     git add portfolio/data/profile.json
+     git commit -m "chore(data): auto-sync profile from GitHub/LinkedIn [skip ci]"
+     git push
+   fi
+   ```
+   Nothing is committed when nothing changed — that check *is* the change detection.
+
+### The whole flow
+
+```mermaid
+flowchart TD
+    A["You push to main<br/>OR cron fires at 06:00 UTC"] --> B{Which trigger?}
+    B -->|push to main| C[deploy.yml]
+    B -->|cron| S[sync.yml]
+    S --> S1[Fetch GitHub / LinkedIn stats]
+    S1 --> S2{profile.json changed?}
+    S2 -->|No| Z1[Done — nothing committed]
+    S2 -->|Yes| S3["Commit + push<br/>(message ends in [skip ci])"]
+    C --> D["ubuntu-latest runner<br/>(NOT Docker)"]
+    D --> E["checkout → setup-node 20<br/>→ npm ci → npm run build"]
+    E --> F[Static export into portfolio/out]
+    F --> G[upload-pages-artifact]
+    G --> H[deploy-pages v4]
+    H --> I["GitHub Pages<br/>monarchsharma20502.github.io"]
+```
+
+### One caveat to remember
+
+The bot's auto-sync commit ends in `[skip ci]`, so a stats refresh (a new repo, a new follower) does
+**not** redeploy the site on its own. Those updated numbers appear on the live site the next time you
+push to `main`, or whenever you manually run **Actions → "Deploy to GitHub Pages" → Run workflow**
+(the `workflow_dispatch` trigger). If you would rather have stat changes publish automatically, remove
+`[skip ci]` from the commit message in `sync.yml` — at the cost of one extra deploy per day whenever
+the numbers move.
+
+---
+
+## 7. Where the data came from
 
 | Source | Used for |
 |--------|----------|
@@ -164,7 +239,7 @@ correct values and I will add them to `profile.json`.
 
 ---
 
-## 7. Deploy (Vercel alternative)
+## 8. Deploy (Vercel alternative)
 
 Prefer Vercel? Import the repository, set the root directory to `portfolio`, and deploy — no
 configuration needed. Remove `output: "export"` from `next.config.mjs` if you want Vercel's
@@ -172,6 +247,6 @@ image optimization and server features.
 
 ---
 
-## 8. Tech stack
+## 9. Tech stack
 
 Next.js 14 (App Router) · React 18 · TypeScript · Tailwind CSS 3 · GitHub Actions · GitHub Pages
