@@ -116,6 +116,30 @@
 				"commit-tasks.ps1"
 			],
 			"group": "build"
+		},
+		{
+			"label": "final cleanup",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"cleanup-tasks.ps1"
+			],
+			"group": "build"
+		},
+		{
+			"label": "rollback cleanup",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"rollback-cleanup.ps1"
+			],
+			"group": "build"
 		}
 	]
 }
