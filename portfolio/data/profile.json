@@ -111,15 +111,40 @@
   "experience": [
     {
       "company": "SEPL",
-      "title": "Cloud / DevOps Engineer",
-      "start": "2024",
+      "title": "Cloud Engineer",
+      "start": "Jun 2026",
       "end": null,
       "current": true,
-      "summary": "Working on cloud infrastructure, automation and container-based delivery.",
+      "summary": "Working on cloud infrastructure, automation and container-based delivery on Microsoft Azure.",
       "highlights": [
         "Building Azure infrastructure automation with Terraform.",
         "Deploying and operating containerized workloads on Kubernetes.",
         "Standing up CI/CD pipelines for application delivery."
+      ]
+    },
+    {
+      "company": "Celebal Technologies",
+      "title": "Azure Cloud Engineer",
+      "start": "Apr 2024",
+      "end": "Feb 2026",
+      "current": false,
+      "summary": "Joined as a Software Engineer and grew into an Azure Cloud Engineer role, working on cloud infrastructure, deployments and automation.",
+      "highlights": [
+        "Designed and managed Azure cloud resources and deployments.",
+        "Automated infrastructure and deployment workflows.",
+        "Collaborated on delivering and operating cloud-based applications."
+      ]
+    },
+    {
+      "company": "Zeetron Networks",
+      "title": "Cloud / DevOps Intern",
+      "start": "May 2023",
+      "end": "Jun 2023",
+      "current": false,
+      "summary": "Two-month internship focused on cloud and DevOps fundamentals.",
+      "highlights": [
+        "Gained hands-on exposure to cloud and DevOps tooling.",
+        "Supported day-to-day infrastructure and deployment tasks."
       ]
     }
   ],
