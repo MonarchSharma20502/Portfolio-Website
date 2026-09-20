@@ -140,6 +140,211 @@
 				"rollback-cleanup.ps1"
 			],
 			"group": "build"
+		},
+		{
+			"label": "validate experience data",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"${workspaceFolder}\\check-experience.ps1"
+			],
+			"group": "build"
+		},
+		{
+			"label": "wait for build",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"${workspaceFolder}\\wait-done.ps1"
+			],
+			"isBackground": true
+		},
+		{
+			"label": "wait for build done",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"${workspaceFolder}\\wait-done.ps1"
+			],
+			"group": "build"
+		},
+		{
+			"label": "check stuck build",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"${workspaceFolder}\\proc-check.ps1"
+			],
+			"group": "build"
+		},
+		{
+			"label": "kill and rebuild",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"${workspaceFolder}\\rebuild.ps1"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "wait rebuild",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"${workspaceFolder}\\wait-rebuild.ps1"
+			],
+			"group": "build"
+		},
+		{
+			"label": "verify html",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"${workspaceFolder}\\verify-html.ps1"
+			],
+			"group": "build"
+		},
+		{
+			"label": "commit and push experience",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"${workspaceFolder}\\commit-experience.ps1"
+			],
+			"group": "build"
+		},
+		{
+			"label": "cleanup and check deploy",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"${workspaceFolder}\\cleanup-check.ps1"
+			],
+			"group": "build"
+		},
+		{
+			"label": "check png sizes",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"${workspaceFolder}\\png-sizes.ps1"
+			],
+			"group": "build"
+		},
+		{
+			"label": "final cleanup",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"${workspaceFolder}\\final-cleanup.ps1"
+			],
+			"group": "build"
+		},
+		{
+			"label": "final cleanup 2",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"final-cleanup.ps1"
+			],
+			"group": "build"
+		},
+		{
+			"label": "remove cleanup scripts",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"self-destruct.ps1"
+			],
+			"group": "build"
+		},
+		{
+			"label": "delete last script",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-Command",
+				"Remove-Item 'self-destruct.ps1' -Force -ErrorAction SilentlyContinue; if (Test-Path 'self-destruct.ps1') { 'STILL THERE' } else { 'GONE' }"
+			],
+			"group": "build"
+		},
+		{
+			"label": "final git status",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-Command",
+				"& 'C:\\Program Files\\Git\\cmd\\git.exe' status --short; & 'C:\\Program Files\\Git\\cmd\\git.exe' log --oneline -3"
+			],
+			"group": "build"
+		},
+		{
+			"label": "git status final",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"git-final.ps1"
+			],
+			"group": "build"
+		},
+		{
+			"label": "remove git scratch",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-Command",
+				"Remove-Item git-final.ps1,git-final.txt -Force -ErrorAction SilentlyContinue"
+			],
+			"group": "build"
 		}
 	]
 }
