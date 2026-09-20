@@ -137,14 +137,15 @@
     },
     {
       "company": "Zeetron Networks",
-      "title": "Cloud / DevOps Intern",
+      "title": "Machine Learning & Data Science Analyst",
       "start": "May 2023",
       "end": "Jun 2023",
       "current": false,
-      "summary": "Two-month internship focused on cloud and DevOps fundamentals.",
+      "summary": "Training and internship focused on machine learning and data science, building practical skills across the full ML workflow from raw data to a deployed model.",
       "highlights": [
-        "Gained hands-on exposure to cloud and DevOps tooling.",
-        "Supported day-to-day infrastructure and deployment tasks."
+        "Worked with Python data-science libraries including pandas, NumPy, Matplotlib and SciPy.",
+        "Practised data pre-processing, model building and the fundamentals of machine learning algorithms.",
+        "Gained exposure to model deployment and how ML work translates into real-world projects."
       ]
     }
   ],
