@@ -140,6 +140,54 @@
 				"rollback-cleanup.ps1"
 			],
 			"group": "build"
+		},
+		{
+			"label": "check context file git state",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"ctx-check.ps1"
+			],
+			"group": "build"
+		},
+		{
+			"label": "remove ctx scratch",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-Command",
+				"Remove-Item ctx-check.ps1,ctx-check.txt -Force -ErrorAction SilentlyContinue"
+			],
+			"group": "build"
+		},
+		{
+			"label": "commit context to animated-portfolio",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"ctx-commit.ps1"
+			],
+			"group": "build"
+		},
+		{
+			"label": "remove ctx commit scratch",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-Command",
+				"Remove-Item ctx-commit.ps1,ctx-commit.txt -Force -ErrorAction SilentlyContinue"
+			],
+			"group": "build"
 		}
 	]
 }
