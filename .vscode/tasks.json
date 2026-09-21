@@ -188,6 +188,42 @@
 				"Remove-Item ctx-commit.ps1,ctx-commit.txt -Force -ErrorAction SilentlyContinue"
 			],
 			"group": "build"
+		},
+		{
+			"label": "push Agents folder to main",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"agents-push.ps1"
+			],
+			"group": "build"
+		},
+		{
+			"label": "push Agents to main retry",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"agents-push2.ps1"
+			],
+			"group": "build"
+		},
+		{
+			"label": "remove agents push scratch",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-Command",
+				"Remove-Item agents-push.ps1,agents-push.txt,agents-push2.ps1,agents-push2.txt -Force -ErrorAction SilentlyContinue"
+			],
+			"group": "build"
 		}
 	]
 }
