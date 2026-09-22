@@ -1,0 +1,4 @@
+﻿FIRST==== next build (started 2026-09-22T22:24:55.8937771+05:30) NODE_ENV=production ===
+EXIT=BUILD EXIT: 0
+IDX=index.html: True
+FAILED=False

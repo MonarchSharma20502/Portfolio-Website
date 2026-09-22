@@ -1,20 +1,20 @@
-﻿=== next build (started 2026-09-22T15:22:31.3841556+05:30) ===
+﻿=== next build (started 2026-09-22T22:24:55.8937771+05:30) NODE_ENV=production ===
   Γû▓ Next.js 14.2.35
 
    Creating an optimized production build ...
-node.exe : (node:17832) [DEP0040] DeprecationWarning: The `punycode` module is 
+node.exe : (node:41868) [DEP0040] DeprecationWarning: The `punycode` module is 
 deprecated. Please use a userland alternative instead.
-At C:\Users\monar\OneDrive - Surbhi Electronet Private Limited 
-(SEPL)\Desktop\Portfolio Website\_work\build.ps1:16 char:1
+At C:\Users\monar\OneDrive - Surbhi Electronet Private Limited (SEPL)\Desktop\Portfolio 
+Website\_work\build.ps1:17 char:1
 + & $node "node_modules\next\dist\bin\next" build 2>&1 | Out-String | F ...
 + ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    + CategoryInfo          : NotSpecified: ((node:17832) [D...native instead.:Strin 
-   g) [], RemoteException
+    + CategoryInfo          : NotSpecified: ((node:41868) [D...native instead.:String)  
+   [], RemoteException
     + FullyQualifiedErrorId : NativeCommandError
  
 (Use `node --trace-deprecation ...` to show where the warning was created)
-(node:36744) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. 
-Please use a userland alternative instead.
+(node:37664) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please 
+use a userland alternative instead.
 (Use `node --trace-deprecation ...` to show where the warning was created)
  Γ£ô Compiled successfully
    Linting and checking validity of types ...
@@ -28,7 +28,7 @@ Please use a userland alternative instead.
    Collecting build traces ...
 
 Route (app)                              Size     First Load JS
-Γöî Γùï /                                    8.59 kB         152 kB
+Γöî Γùï /                                    9.65 kB         154 kB
 Γöö Γùï /_not-found                          873 B          88.3 kB
 + First Load JS shared by all            87.4 kB
   Γö£ chunks/117-054daf65d1328387.js       31.9 kB
