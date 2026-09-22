@@ -5,6 +5,7 @@ import "./globals.css";
 import { profile } from "@/lib/profile";
 import AmbientBackground from "@/components/motion/AmbientBackground";
 import ScrollProgress from "@/components/motion/ScrollProgress";
+import TopologyBackground from "@/components/motion/TopologyBackground";
 
 // profile.avatar is site-absolute ("/Portfolio-Website/avatar.png"). Next.js
 // prepends basePath to relative metadata image URLs and then resolves them
@@ -105,6 +106,7 @@ export default function RootLayout({
         <MotionConfig reducedMotion="user">
           <ScrollProgress />
           <AmbientBackground />
+          <TopologyBackground />
           {children}
         </MotionConfig>
       </body>

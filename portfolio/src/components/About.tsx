@@ -1,5 +1,6 @@
 import { profile } from "@/lib/profile";
 import Reveal from "./Reveal";
+import ShimmerText from "./motion/ShimmerText";
 
 export default function About() {
   return (
@@ -7,7 +8,7 @@ export default function About() {
       <Reveal>
         <p className="section-title">01 / About</p>
         <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
-          A bit about me
+          A bit about <ShimmerText>me</ShimmerText>
         </h2>
       </Reveal>
 

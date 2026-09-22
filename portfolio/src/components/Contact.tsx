@@ -1,5 +1,6 @@
 import { profile } from "@/lib/profile";
 import Reveal from "./Reveal";
+import Magnetic from "./motion/Magnetic";
 
 export default function Contact() {
   const channels = [
@@ -59,17 +60,21 @@ export default function Contact() {
           </div>
 
           <div className="mt-8 flex flex-wrap gap-3">
-            <a href={`mailto:${profile.email}`} className="btn-primary">
-              Say hello
-            </a>
-            <a
-              href={profile.linkedin.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-ghost"
-            >
-              Connect on LinkedIn →
-            </a>
+            <Magnetic strength={0.4}>
+              <a href={`mailto:${profile.email}`} className="btn-primary">
+                Say hello
+              </a>
+            </Magnetic>
+            <Magnetic strength={0.4}>
+              <a
+                href={profile.linkedin.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-ghost"
+              >
+                Connect on LinkedIn →
+              </a>
+            </Magnetic>
           </div>
         </div>
       </Reveal>

@@ -86,6 +86,17 @@ html {
   );
 }
 
+/* Light band sweeping across ShimmerText. Disabled under reduced-motion by
+   the media query below (animation-name: none). */
+@keyframes shimmer-sweep {
+  0% {
+    background-position: 120% 0;
+  }
+  100% {
+    background-position: -120% 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -95,9 +106,18 @@ html {
     opacity: 1 !important;
     animation: none !important;
   }
+  /* Same problem for entrance animations applied directly by motion
+     components (Stats, Projects, Experience) rather than via <Reveal>.
+     Framer bakes opacity:0 into the SSR HTML as an inline style, which
+     beats any normal class, so the override has to be !important. */
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
   * {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    animation-name: none !important;
   }
 }

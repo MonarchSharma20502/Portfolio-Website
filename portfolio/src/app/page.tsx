@@ -9,6 +9,7 @@ import Education from "@/components/Education";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import Marquee from "@/components/motion/Marquee";
+import VelocityMarquee from "@/components/motion/VelocityMarquee";
 
 const MARQUEE_TOPICS = [
   "Kubernetes",
@@ -32,11 +33,10 @@ export default function Home() {
         <Marquee items={MARQUEE_TOPICS} className="my-6" />
         <Skills />
         <Experience />
-        <Marquee
+        <VelocityMarquee
           items={MARQUEE_TOPICS}
           className="my-6"
-          duration={34}
-          reverse
+          baseDuration={30}
         />
         <Projects />
         <Education />

@@ -3,8 +3,9 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { profile } from "@/lib/profile";
-import { fadeUp, staggerContainer, viewportOnce } from "@/lib/motion";
+import { fadeUp, none, staggerContainer, viewportOnce } from "@/lib/motion";
 import Reveal from "./Reveal";
+import SpotlightBorder from "./motion/SpotlightBorder";
 import Tilt from "./motion/Tilt";
 
 export default function Projects() {
@@ -30,15 +31,17 @@ export default function Projects() {
       </Reveal>
 
       <motion.div
-        variants={reduce ? undefined : staggerContainer(0.12)}
+        data-reveal
+        variants={reduce ? none : staggerContainer(0.12)}
         initial="hidden"
         whileInView="visible"
         viewport={viewportOnce}
         className="mt-10 grid gap-6 md:grid-cols-2"
       >
         {featured.map((project) => (
-          <motion.div key={project.name} variants={reduce ? undefined : fadeUp}>
-            <Tilt className="card group flex h-full flex-col [transform-style:preserve-3d]">
+          <motion.div key={project.name} data-reveal variants={reduce ? none : fadeUp}>
+            <SpotlightBorder className="h-full rounded-2xl">
+              <Tilt className="card group flex h-full flex-col [transform-style:preserve-3d]">
               {/* Cursor-following sheen */}
               <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                 <div className="sheen absolute inset-0 rounded-2xl" />
@@ -63,6 +66,7 @@ export default function Projects() {
                 ))}
               </div>
             </Tilt>
+            </SpotlightBorder>
           </motion.div>
         ))}
       </motion.div>

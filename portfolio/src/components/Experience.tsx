@@ -3,8 +3,9 @@
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
 import { profile } from "@/lib/profile";
-import { fadeUp, staggerContainer, viewportOnce } from "@/lib/motion";
+import { fadeUp, none, staggerContainer, viewportOnce } from "@/lib/motion";
 import Reveal from "./Reveal";
+import SectionLabel from "./motion/SectionLabel";
 
 export default function Experience() {
   const reduceMotion = useReducedMotion();
@@ -24,12 +25,11 @@ export default function Experience() {
 
   return (
     <section id="experience" className="section">
-      <Reveal>
-        <p className="section-title">03 / Experience</p>
-        <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
-          Where I have worked
-        </h2>
-      </Reveal>
+      <SectionLabel
+        index="03 / Experience"
+        title="Where I have worked"
+        className="mb-10"
+      />
 
       <div ref={trackRef} className="relative mt-10">
         {/* Track base */}
@@ -41,7 +41,8 @@ export default function Experience() {
         />
 
         <motion.div
-          variants={reduce ? undefined : staggerContainer(0.15)}
+          data-reveal
+          variants={reduce ? none : staggerContainer(0.15)}
           initial="hidden"
           whileInView="visible"
           viewport={viewportOnce}
@@ -50,13 +51,14 @@ export default function Experience() {
           {profile.experience.map((job) => (
             <motion.div
               key={`${job.company}-${job.title}`}
-              variants={reduce ? undefined : fadeUp}
+              data-reveal
+              variants={reduce ? none : fadeUp}
               className="relative pl-6"
             >
               <motion.span
                 variants={
                   reduce
-                    ? undefined
+                    ? none
                     : {
                         hidden: { scale: 0, opacity: 0 },
                         visible: {

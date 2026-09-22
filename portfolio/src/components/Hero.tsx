@@ -5,6 +5,7 @@ import { useRef } from "react";
 import { profile } from "@/lib/profile";
 import { EASE } from "@/lib/motion";
 import CursorGlow from "./motion/CursorGlow";
+import Magnetic from "./motion/Magnetic";
 
 const container = {
   hidden: {},
@@ -95,17 +96,21 @@ export default function Hero() {
           </motion.p>
 
           <motion.div variants={wordVariant} className="mt-8 flex flex-wrap gap-3">
-            <a href="#contact" className="btn-primary">
-              Get in touch
-            </a>
-            <a
-              href={profile.github.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-ghost"
-            >
-              View GitHub →
-            </a>
+            <Magnetic strength={0.4}>
+              <a href="#contact" className="btn-primary">
+                Get in touch
+              </a>
+            </Magnetic>
+            <Magnetic strength={0.4}>
+              <a
+                href={profile.github.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-ghost"
+              >
+                View GitHub →
+              </a>
+            </Magnetic>
           </motion.div>
 
           <motion.div variants={wordVariant} className="mt-8 flex items-center gap-5">

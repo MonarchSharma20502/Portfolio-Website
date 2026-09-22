@@ -3,7 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { profile } from "@/lib/profile";
-import { staggerContainer, viewportOnce } from "@/lib/motion";
+import { none, staggerContainer, viewportOnce } from "@/lib/motion";
 import Reveal from "./Reveal";
 import Counter from "./motion/Counter";
 
@@ -25,7 +25,8 @@ export default function Stats() {
   return (
     <section id="stats" className="section py-12">
       <motion.ul
-        variants={reduce ? undefined : staggerContainer(0.1)}
+        data-reveal
+        variants={reduce ? none : staggerContainer(0.1)}
         initial="hidden"
         whileInView="visible"
         viewport={viewportOnce}
@@ -34,9 +35,10 @@ export default function Stats() {
         {items.map((item) => (
           <motion.li
             key={item.label}
+            data-reveal
             variants={
               reduce
-                ? undefined
+                ? none
                 : {
                     hidden: { opacity: 0, y: 16, scale: 0.96 },
                     visible: {

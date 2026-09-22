@@ -17,6 +17,19 @@ export const fadeUp: Variants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
 };
 
+/** No-op variant.
+ *
+ * IMPORTANT: use this instead of `undefined` when disabling motion for
+ * reduced-motion users. With `undefined`, Framer Motion still honours
+ * `initial="hidden"` and bakes `opacity:0` into the SSR HTML as an inline
+ * style — which then never gets removed because there is no variant to
+ * animate to. Inline styles beat CSS classes, so the content stays
+ * invisible forever. An explicit empty variant renders at full opacity. */
+export const none: Variants = {
+  hidden: {},
+  visible: {},
+};
+
 export const fadeIn: Variants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { duration: 0.7, ease: EASE } },
