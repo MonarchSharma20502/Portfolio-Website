@@ -1,0 +1,12 @@
+﻿server pid: 22152  hasExited: False
+=== HTTP 200 check ===
+status: 200, length: 70286
+=== markers ===
+Monarch => True
+Cloud => True
+framer => False
+scroll => False
+Marquee => False
+marquee => False
+Things I have built => True
+Where I have worked => True

@@ -64,21 +64,35 @@ html {
   }
 }
 
-/* Subtle entrance animation used with the Reveal wrapper component */
+/* Subtle entrance animation used with the Reveal wrapper component.
+   Defensive: content must never stay invisible. Framer Motion writes
+   opacity:0 as an inline style while waiting for whileInView, which beats
+   any normal class, so the reduced-motion override uses !important. */
 .reveal {
   opacity: 0;
 }
 
 .reveal.is-visible {
+  opacity: 1;
   animation: fade-in-up 0.6s ease-out both;
+}
+
+/* Cursor-following sheen on project cards */
+.sheen {
+  background: radial-gradient(
+    500px circle at var(--sheen-x, 50%) var(--sheen-y, 50%),
+    rgb(56 189 248 / 0.14),
+    transparent 45%
+  );
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
+  /* Inline opacity:0 from Framer Motion would otherwise hide content. */
   .reveal {
-    opacity: 1;
+    opacity: 1 !important;
     animation: none !important;
   }
   * {

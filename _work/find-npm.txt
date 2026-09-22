@@ -1,0 +1,15 @@
+﻿C:\Users\monar\node-portable\node-v22.11.0-win-x64\node_modules\npm\bin\npm-cli.js => True
+C:\Users\monar\node-portable\node-v22.11.0-win-x64\node_modules\npm => True
+C:\Users\monar\AppData\Roaming\npm => False
+C:\Program Files\nodejs => False
+=== npm on PATH ===
+npm: NOT FOUND on PATH
+=== node_modules\npm dirs anywhere under node-portable ===
+C:\Users\monar\node-portable\node-v22.11.0-win-x64\node_modules\npm\bin\npm-cli.js
+=== global npm root ===
+[
+  'C:\\Users\\monar\\.node_modules',
+  'C:\\Users\\monar\\.node_libraries',
+  'C:\\Users\\monar\\node-portable\\node-v22.11.0-win-x64\\lib\\node'
+]
+

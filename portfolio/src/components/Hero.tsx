@@ -1,36 +1,90 @@
+"use client";
+
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 import { profile } from "@/lib/profile";
+import { EASE } from "@/lib/motion";
+import CursorGlow from "./motion/CursorGlow";
+
+const container = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.07, delayChildren: 0.15 } },
+};
+
+// Words of the name rise from behind a mask edge, one at a time.
+const wordVariant = {
+  hidden: { y: "115%" },
+  visible: { y: "0%", transition: { duration: 0.85, ease: EASE } },
+};
 
 export default function Hero() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+
+  // Scroll choreography: the hero parts the way as you scroll into the page.
+  const yAvatar = useTransform(scrollYProgress, [0, 1], [0, 70]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
+  const blobScale = useTransform(scrollYProgress, [0, 1], [1, 1.25]);
+  const name = profile.name.split(" ");
+
   return (
     <section
+      ref={sectionRef}
       id="hero"
       className="relative flex min-h-screen items-center overflow-hidden px-6 pt-16 sm:px-8"
     >
+      <CursorGlow />
+
       {/* Decorative animated background blobs */}
-      <div
+      <motion.div
+        style={{ scale: blobScale }}
         className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
         aria-hidden="true"
       >
         <div className="absolute -left-24 top-10 h-72 w-72 rounded-full bg-accent/20 blur-3xl animate-blob dark:bg-accent/10" />
         <div className="absolute right-0 top-1/3 h-80 w-80 rounded-full bg-indigo-400/20 blur-3xl animate-blob dark:bg-indigo-500/10 [animation-delay:3s]" />
         <div className="absolute bottom-0 left-1/3 h-72 w-72 rounded-full bg-emerald-400/20 blur-3xl animate-blob dark:bg-emerald-500/10 [animation-delay:6s]" />
-      </div>
+      </motion.div>
 
-      <div className="mx-auto grid w-full max-w-5xl items-center gap-12 py-20 md:grid-cols-[1.4fr_1fr]">
-        <div className="animate-fade-in-up">
-          <p className="font-mono text-sm font-medium text-accent">
+      <motion.div
+        style={{ opacity: heroOpacity }}
+        className="mx-auto grid w-full max-w-5xl items-center gap-12 py-20 md:grid-cols-[1.4fr_1fr]"
+      >
+        <motion.div variants={container} initial="hidden" animate="visible">
+          <motion.p
+            variants={wordVariant}
+            className="font-mono text-sm font-medium text-accent"
+          >
             {profile.role}
-          </p>
+          </motion.p>
 
           <h1 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
-            {profile.name}
+            {/* Each word rises from behind a mask edge */}
+            <span className="flex flex-wrap gap-x-4">
+              {name.map((word, i) => (
+                <span key={i} className="inline-block overflow-hidden pb-[0.08em]">
+                  <motion.span variants={wordVariant} className="inline-block">
+                    {word}
+                  </motion.span>
+                </span>
+              ))}
+            </span>
           </h1>
 
-          <p className="mt-5 max-w-xl text-lg leading-relaxed text-slate-600 dark:text-slate-300">
+          <motion.p
+            variants={wordVariant}
+            className="mt-5 max-w-xl text-lg leading-relaxed text-slate-600 dark:text-slate-300"
+          >
             {profile.tagline}
-          </p>
+          </motion.p>
 
-          <p className="mt-4 flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+          <motion.p
+            variants={wordVariant}
+            className="mt-4 flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400"
+          >
             <span aria-hidden="true">📍</span>
             {profile.location}
             {profile.hireable && (
@@ -38,9 +92,9 @@ export default function Hero() {
                 Open to opportunities
               </span>
             )}
-          </p>
+          </motion.p>
 
-          <div className="mt-8 flex flex-wrap gap-3">
+          <motion.div variants={wordVariant} className="mt-8 flex flex-wrap gap-3">
             <a href="#contact" className="btn-primary">
               Get in touch
             </a>
@@ -52,9 +106,9 @@ export default function Hero() {
             >
               View GitHub →
             </a>
-          </div>
+          </motion.div>
 
-          <div className="mt-8 flex items-center gap-5">
+          <motion.div variants={wordVariant} className="mt-8 flex items-center gap-5">
             <a
               href={profile.github.url}
               target="_blank"
@@ -80,24 +134,67 @@ export default function Hero() {
             >
               <MailIcon />
             </a>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
-        <div className="flex justify-center md:justify-end">
-          <div className="relative">
-            <div className="absolute -inset-3 rounded-full bg-gradient-to-tr from-accent via-indigo-400 to-emerald-400 opacity-70 blur-2xl" />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={profile.avatar}
-              alt={`Portrait of ${profile.name}`}
-              width={224}
-              height={224}
-              className="relative h-48 w-48 rounded-full border-4 border-white object-cover shadow-xl dark:border-slate-900 sm:h-56 sm:w-56"
-            />
-          </div>
-        </div>
-      </div>
+        <motion.div style={{ y: yAvatar }} className="flex justify-center md:justify-end">
+          <TiltAvatar />
+        </motion.div>
+      </motion.div>
+
+      <ScrollCue />
     </section>
+  );
+}
+
+/** Avatar with a pointer-tracking 3D tilt and an animated gradient ring. */
+function TiltAvatar() {
+  return (
+    <div className="relative">
+      <motion.div
+        className="absolute -inset-3 rounded-full bg-gradient-to-tr from-accent via-indigo-400 to-emerald-400 opacity-70 blur-2xl"
+        animate={{ rotate: 360 }}
+        transition={{ duration: 22, ease: "linear", repeat: Infinity }}
+      />
+      <motion.div
+        whileHover={{ scale: 1.04 }}
+        transition={{ type: "spring", stiffness: 260, damping: 18 }}
+        className="relative"
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={profile.avatar}
+          alt={`Portrait of ${profile.name}`}
+          width={224}
+          height={224}
+          className="relative h-48 w-48 rounded-full border-4 border-white object-cover shadow-xl dark:border-slate-900 sm:h-56 sm:w-56"
+        />
+      </motion.div>
+    </div>
+  );
+}
+
+/** A subtle bouncing cue at the bottom of the hero inviting the visitor down. */
+function ScrollCue() {
+  return (
+    <motion.div
+      aria-hidden="true"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 1.4, duration: 0.8 }}
+      className="absolute bottom-7 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 md:flex"
+    >
+      <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-slate-400 dark:text-slate-600">
+        Scroll
+      </span>
+      <span className="relative flex h-9 w-5 justify-center rounded-full border border-slate-300 dark:border-slate-700">
+        <motion.span
+          className="mt-1.5 h-1.5 w-1.5 rounded-full bg-accent"
+          animate={{ y: [0, 12, 0], opacity: [1, 0.3, 1] }}
+          transition={{ duration: 1.8, ease: "easeInOut", repeat: Infinity }}
+        />
+      </span>
+    </motion.div>
   );
 }
 

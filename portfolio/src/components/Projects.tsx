@@ -1,7 +1,17 @@
+"use client";
+
+import { motion, useReducedMotion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { profile } from "@/lib/profile";
+import { fadeUp, staggerContainer, viewportOnce } from "@/lib/motion";
 import Reveal from "./Reveal";
+import Tilt from "./motion/Tilt";
 
 export default function Projects() {
+  const reduceMotion = useReducedMotion();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const reduce = mounted && reduceMotion;
   const featured = profile.projects.filter((p) => p.featured);
   const rest = profile.projects.filter((p) => !p.featured);
 
@@ -19,30 +29,43 @@ export default function Projects() {
         </p>
       </Reveal>
 
-      <div className="mt-10 grid gap-6 md:grid-cols-2">
+      <motion.div
+        variants={reduce ? undefined : staggerContainer(0.12)}
+        initial="hidden"
+        whileInView="visible"
+        viewport={viewportOnce}
+        className="mt-10 grid gap-6 md:grid-cols-2"
+      >
         {featured.map((project) => (
-          <Reveal key={project.name} className="card group flex flex-col">
-            <div className="flex items-start justify-between gap-3">
-              <h3 className="text-lg font-semibold transition group-hover:text-accent">
-                {project.name}
-              </h3>
-              <GitHubLink repo={project.repo} />
-            </div>
+          <motion.div key={project.name} variants={reduce ? undefined : fadeUp}>
+            <Tilt className="card group flex h-full flex-col [transform-style:preserve-3d]">
+              {/* Cursor-following sheen */}
+              <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                <div className="sheen absolute inset-0 rounded-2xl" />
+              </div>
 
-            <p className="mt-3 flex-1 leading-relaxed text-slate-600 dark:text-slate-300">
-              {project.description}
-            </p>
+              <div className="relative flex items-start justify-between gap-3">
+                <h3 className="text-lg font-semibold transition group-hover:text-accent">
+                  {project.name}
+                </h3>
+                <GitHubLink repo={project.repo} />
+              </div>
 
-            <div className="mt-4 flex flex-wrap gap-2">
-              {project.tech.map((t) => (
-                <span key={t} className="chip">
-                  {t}
-                </span>
-              ))}
-            </div>
-          </Reveal>
+              <p className="relative mt-3 flex-1 leading-relaxed text-slate-600 dark:text-slate-300">
+                {project.description}
+              </p>
+
+              <div className="relative mt-4 flex flex-wrap gap-2">
+                {project.tech.map((t) => (
+                  <span key={t} className="chip">
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </Tilt>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       {rest.length > 0 && (
         <>
@@ -55,8 +78,10 @@ export default function Projects() {
           <Reveal>
             <ul className="mt-6 divide-y divide-slate-200 dark:divide-slate-800">
               {rest.map((project) => (
-                <li
+                <motion.li
                   key={project.name}
+                  whileHover={reduce ? undefined : { x: 6 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 22 }}
                   className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 py-3"
                 >
                   <div className="min-w-0">
@@ -79,7 +104,7 @@ export default function Projects() {
                       </span>
                     ))}
                   </div>
-                </li>
+                </motion.li>
               ))}
             </ul>
           </Reveal>

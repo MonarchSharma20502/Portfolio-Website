@@ -1,0 +1,44 @@
+﻿=== next build (started 2026-09-22T15:22:31.3841556+05:30) ===
+  Γû▓ Next.js 14.2.35
+
+   Creating an optimized production build ...
+node.exe : (node:17832) [DEP0040] DeprecationWarning: The `punycode` module is 
+deprecated. Please use a userland alternative instead.
+At C:\Users\monar\OneDrive - Surbhi Electronet Private Limited 
+(SEPL)\Desktop\Portfolio Website\_work\build.ps1:16 char:1
++ & $node "node_modules\next\dist\bin\next" build 2>&1 | Out-String | F ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:17832) [D...native instead.:Strin 
+   g) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+(Use `node --trace-deprecation ...` to show where the warning was created)
+(node:36744) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. 
+Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+ Γ£ô Compiled successfully
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/4) ...
+   Generating static pages (1/4) 
+   Generating static pages (2/4) 
+   Generating static pages (3/4) 
+ Γ£ô Generating static pages (4/4)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                              Size     First Load JS
+Γöî Γùï /                                    8.59 kB         152 kB
+Γöö Γùï /_not-found                          873 B          88.3 kB
++ First Load JS shared by all            87.4 kB
+  Γö£ chunks/117-054daf65d1328387.js       31.9 kB
+  Γö£ chunks/fd9d1056-b11b2651f33aae7f.js  53.6 kB
+  Γöö other shared chunks (total)          1.93 kB
+
+
+Γùï  (Static)  prerendered as static content
+
+
+BUILD EXIT: 0
+=== out/ index exists? ===
+index.html: True

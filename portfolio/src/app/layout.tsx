@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
+import { MotionConfig } from "framer-motion";
 import "./globals.css";
 import { profile } from "@/lib/profile";
+import AmbientBackground from "@/components/motion/AmbientBackground";
+import ScrollProgress from "@/components/motion/ScrollProgress";
 
 // profile.avatar is site-absolute ("/Portfolio-Website/avatar.png"). Next.js
 // prepends basePath to relative metadata image URLs and then resolves them
@@ -99,7 +102,11 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100`}
       >
-        {children}
+        <MotionConfig reducedMotion="user">
+          <ScrollProgress />
+          <AmbientBackground />
+          {children}
+        </MotionConfig>
       </body>
     </html>
   );
