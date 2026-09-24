@@ -38,3 +38,7 @@ yarn-error.log*
 node.zip
 dump.bin
 dump.pl
+
+# Local investigation scratch dir: build scripts, trace scripts, screenshots
+_work/
+_baseline/

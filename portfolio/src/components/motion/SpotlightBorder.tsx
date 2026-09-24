@@ -1,7 +1,8 @@
 "use client";
 
-import { useMotionValue, useReducedMotion } from "framer-motion";
+import { useMotionValue } from "framer-motion";
 import { useRef } from "react";
+import { useMountedReducedMotion } from "@/lib/motion";
 /**
  * Spotlight border — a ring of light that follows the cursor around the
  * card's edge, plus a soft inner glow. The "spotlight card" pattern
@@ -20,7 +21,7 @@ export default function SpotlightBorder({
   children: React.ReactNode;
   className?: string;
 }) {
-  const reduce = useReducedMotion();
+  const reduce = useMountedReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
   const mx = useMotionValue(50);
   const my = useMotionValue(50);

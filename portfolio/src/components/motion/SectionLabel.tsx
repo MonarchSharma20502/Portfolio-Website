@@ -2,11 +2,11 @@
 
 import {
   motion,
-  useReducedMotion,
   useScroll,
   useTransform,
 } from "framer-motion";
 import { useRef } from "react";
+import { useMountedReducedMotion } from "@/lib/motion";
 
 /**
  * Section heading with a scroll-linked underline.
@@ -28,7 +28,7 @@ export default function SectionLabel({
   title: string;
   className?: string;
 }) {
-  const reduce = useReducedMotion();
+  const reduce = useMountedReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,

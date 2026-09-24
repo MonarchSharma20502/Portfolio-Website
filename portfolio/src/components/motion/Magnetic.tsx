@@ -3,10 +3,10 @@
 import {
   motion,
   useMotionValue,
-  useReducedMotion,
   useSpring,
 } from "framer-motion";
 import { useRef } from "react";
+import { useMountedReducedMotion } from "@/lib/motion";
 
 /**
  * Magnetic wrapper: pulls its child toward the cursor while hovered, then
@@ -27,7 +27,7 @@ export default function Magnetic({
   /** 0 = no pull, 1 = follows the cursor exactly. */
   strength?: number;
 }) {
-  const reduce = useReducedMotion();
+  const reduce = useMountedReducedMotion();
   const ref = useRef<HTMLSpanElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);

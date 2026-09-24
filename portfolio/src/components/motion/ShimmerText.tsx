@@ -1,6 +1,6 @@
 "use client";
 
-import { useReducedMotion } from "framer-motion";
+import { useMountedReducedMotion } from "@/lib/motion";
 
 /**
  * Shimmering gradient text. A soft band of light sweeps across the letters
@@ -19,7 +19,7 @@ export default function ShimmerText({
   children: React.ReactNode;
   className?: string;
 }) {
-  const reduce = useReducedMotion();
+  const reduce = useMountedReducedMotion();
 
   return (
     <span

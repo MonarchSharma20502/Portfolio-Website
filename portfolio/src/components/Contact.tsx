@@ -1,6 +1,7 @@
 import { profile } from "@/lib/profile";
 import Reveal from "./Reveal";
 import Magnetic from "./motion/Magnetic";
+import ParallaxLayer from "./motion/ParallaxLayer";
 
 export default function Contact() {
   const channels = [
@@ -25,7 +26,15 @@ export default function Contact() {
   ] as const;
 
   return (
-    <section id="contact" className="section">
+    <section id="contact" className="section relative">
+      {/* Parallax depth drifting behind the contact card. */}
+      <ParallaxLayer
+        speed={-0.4}
+        className="pointer-events-none absolute -left-24 top-0 -z-10"
+      >
+        <div className="h-64 w-64 rounded-full bg-indigo-400/10 blur-3xl dark:bg-indigo-500/[0.07]" />
+      </ParallaxLayer>
+
       <Reveal>
         <div className="rounded-3xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white p-8 dark:border-slate-800 dark:from-slate-900 dark:to-slate-950 sm:p-12">
           <p className="section-title">06 / Contact</p>

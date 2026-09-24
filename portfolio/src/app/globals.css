@@ -10,6 +10,15 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
+  /* Decorative parallax blobs and marquee tracks intentionally extend past
+     the viewport edges. `clip` (not `hidden`) keeps them from creating
+     horizontal scrollbars without turning html into a scroll container,
+     which would break position: sticky/fixed layers. */
+  overflow-x: clip;
+}
+
+body {
+  overflow-x: clip;
 }
 
 @layer base {
@@ -84,6 +93,37 @@ html {
     rgb(56 189 248 / 0.14),
     transparent 45%
   );
+}
+
+/* 3D ring of skill chips. One transform on the container only, so it is
+   effectively free per frame. Disabled under reduced-motion below. */
+@keyframes orbit-spin {
+  from {
+    transform: rotateX(0deg);
+  }
+  to {
+    transform: rotateX(360deg);
+  }
+}
+
+.orbit-ring {
+  animation: orbit-spin 38s linear infinite;
+  transform-style: preserve-3d;
+}
+
+.orbit-ring:hover {
+  animation-duration: 14s;
+}
+
+/* Depth layers used by DepthCard: content floats above the card surface. */
+.depth-content {
+  transform: translateZ(34px);
+  transform-style: preserve-3d;
+}
+
+.depth-glow {
+  transform: translateZ(-26px);
+  transform-style: preserve-3d;
 }
 
 /* Light band sweeping across ShimmerText. Disabled under reduced-motion by

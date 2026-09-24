@@ -1,7 +1,8 @@
 "use client";
 
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useState } from "react";
+import { useMountedReducedMotion } from "@/lib/motion";
 
 /**
  * Animated infrastructure "topology" — a fixed SVG mesh of nodes and links
@@ -17,7 +18,7 @@ import { useEffect, useState } from "react";
  * travelling pulse is pure stroke-dashoffset animation.
  */
 export default function TopologyBackground() {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = useMountedReducedMotion();
   const [mounted, setMounted] = useState(false);
   const { scrollY } = useScroll();
 

@@ -1,17 +1,13 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { profile } from "@/lib/profile";
-import { none, staggerContainer, viewportOnce } from "@/lib/motion";
+import { none, staggerContainer, viewportOnce, useMountedReducedMotion } from "@/lib/motion";
 import Reveal from "./Reveal";
 import Counter from "./motion/Counter";
 
 export default function Stats() {
-  const reduceMotion = useReducedMotion();
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-  const reduce = mounted && reduceMotion;
+  const reduce = useMountedReducedMotion();
   const items = [
     { label: "Public repositories", value: profile.stats.publicRepos },
     { label: "GitHub followers", value: profile.stats.followers },

@@ -1,10 +1,19 @@
 import { profile } from "@/lib/profile";
 import Reveal from "./Reveal";
 import ShimmerText from "./motion/ShimmerText";
+import ParallaxLayer from "./motion/ParallaxLayer";
 
 export default function About() {
   return (
-    <section id="about" className="section">
+    <section id="about" className="section relative">
+      {/* Parallax depth: a soft accent shape drifts behind the section as
+          it scrolls through the viewport. Decorative only. */}
+      <ParallaxLayer
+        speed={0.5}
+        className="pointer-events-none absolute -right-24 top-10 -z-10"
+      >
+        <div className="h-64 w-64 rounded-full bg-accent/10 blur-3xl dark:bg-accent/[0.07]" />
+      </ParallaxLayer>
       <Reveal>
         <p className="section-title">01 / About</p>
         <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">

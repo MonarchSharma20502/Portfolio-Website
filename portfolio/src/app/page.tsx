@@ -10,6 +10,7 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import Marquee from "@/components/motion/Marquee";
 import VelocityMarquee from "@/components/motion/VelocityMarquee";
+import CurtainReveal from "@/components/motion/CurtainReveal";
 
 const MARQUEE_TOPICS = [
   "Kubernetes",
@@ -28,17 +29,25 @@ export default function Home() {
       <Navbar />
       <main id="main">
         <Hero />
-        <About />
+        <CurtainReveal>
+          <About />
+        </CurtainReveal>
         <Stats />
         <Marquee items={MARQUEE_TOPICS} className="my-6" />
-        <Skills />
-        <Experience />
+        <CurtainReveal>
+          <Skills />
+        </CurtainReveal>
+        <CurtainReveal>
+          <Experience />
+        </CurtainReveal>
         <VelocityMarquee
           items={MARQUEE_TOPICS}
           className="my-6"
           baseDuration={30}
         />
-        <Projects />
+        <CurtainReveal>
+          <Projects />
+        </CurtainReveal>
         <Education />
         <Contact />
       </main>

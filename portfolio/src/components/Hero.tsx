@@ -1,11 +1,18 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
+import { lazy, Suspense } from "react";
 import { useRef } from "react";
 import { profile } from "@/lib/profile";
 import { EASE } from "@/lib/motion";
 import CursorGlow from "./motion/CursorGlow";
 import Magnetic from "./motion/Magnetic";
+
+// The whole WebGL subtree (three.js + shaders) is loaded with React lazy()
+// rather than next/dynamic: next/dynamic preloads its chunk in the page's
+// initial script set, which would put ~970KB of three.js on the first
+// request. lazy() fetches it only when the component actually renders.
+const HeroScene = lazy(() => import("./three/HeroScene"));
 
 const container = {
   hidden: {},
@@ -38,6 +45,12 @@ export default function Hero() {
       className="relative flex min-h-screen items-center overflow-hidden px-6 pt-16 sm:px-8"
     >
       <CursorGlow />
+
+      {/* WebGL layer: a distortion orb inside a particle cloud, stage-left
+          so it never sits under the headline. Turns and dollies on scroll. */}
+      <Suspense fallback={null}>
+        <HeroScene />
+      </Suspense>
 
       {/* Decorative animated background blobs */}
       <motion.div
@@ -152,10 +165,10 @@ export default function Hero() {
   );
 }
 
-/** Avatar with a pointer-tracking 3D tilt and an animated gradient ring. */
+/** Avatar with a pointer-tracking 3D tilt, layered depth and an animated gradient ring. */
 function TiltAvatar() {
   return (
-    <div className="relative">
+    <div className="relative" style={{ perspective: "900px" }}>
       <motion.div
         className="absolute -inset-3 rounded-full bg-gradient-to-tr from-accent via-indigo-400 to-emerald-400 opacity-70 blur-2xl"
         animate={{ rotate: 360 }}
@@ -165,7 +178,14 @@ function TiltAvatar() {
         whileHover={{ scale: 1.04 }}
         transition={{ type: "spring", stiffness: 260, damping: 18 }}
         className="relative"
+        style={{ transformStyle: "preserve-3d" }}
       >
+        {/* Orbiting accent ring — real 3D, tilted in perspective */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute left-1/2 top-1/2 h-[19rem] w-[19rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-accent/30 sm:h-[21rem] sm:w-[21rem]"
+          style={{ transform: "translate(-50%, -50%) rotateX(72deg) translateZ(40px)" }}
+        />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={profile.avatar}
@@ -173,6 +193,7 @@ function TiltAvatar() {
           width={224}
           height={224}
           className="relative h-48 w-48 rounded-full border-4 border-white object-cover shadow-xl dark:border-slate-900 sm:h-56 sm:w-56"
+          style={{ transform: "translateZ(26px)" }}
         />
       </motion.div>
     </div>

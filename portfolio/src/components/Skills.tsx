@@ -1,8 +1,11 @@
 import { profile } from "@/lib/profile";
 import Reveal from "./Reveal";
 import SectionLabel from "./motion/SectionLabel";
+import OrbitSkills from "./motion/OrbitSkills";
 
 export default function Skills() {
+  const orbitItems = profile.skills.flatMap((g) => g.items).slice(0, 14);
+
   return (
     <section id="skills" className="section">
       <SectionLabel index="02 / Skills" title="Technologies I work with" />
@@ -30,6 +33,15 @@ export default function Skills() {
           </Reveal>
         ))}
       </div>
+
+      {/* Rotating 3D ring of the full toolset. Falls back to a flat grid
+          under reduced-motion, so nothing is locked behind the animation. */}
+      <Reveal className="mt-16">
+        <h3 className="text-center font-mono text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+          The full toolset, in orbit
+        </h3>
+        <OrbitSkills items={orbitItems} className="mt-8" />
+      </Reveal>
     </section>
   );
 }

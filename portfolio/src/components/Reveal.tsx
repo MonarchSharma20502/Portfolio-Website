@@ -1,9 +1,9 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { EASE } from "@/lib/motion";
+import { EASE, useMountedReducedMotion } from "@/lib/motion";
 
 // Cache motion(Tag) at module scope — recreating it inside render remounts
 // the subtree and restarts animations on every parent update.
@@ -42,10 +42,9 @@ export default function Reveal({
   const ref = useRef<HTMLElement>(null);
   const [supported, setSupported] = useState(false);
   // useReducedMotion() is false during SSR, which would bake opacity:0 into
-  // the server HTML. Only trust it after hydration.
-  const [mounted, setMounted] = useState(false);
-  const reduce = useReducedMotion();
-  useEffect(() => setMounted(true), []);
+  // the server HTML. useMountedReducedMotion() pins it to false until mount
+  // so the server and first client render agree.
+  const reduce = useMountedReducedMotion();
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -78,7 +77,7 @@ export default function Reveal({
   }, [once]);
 
   const variants: Variants =
-    mounted && reduce
+    reduce
       ? { hidden: {}, visible: {} }
       : {
           hidden: { opacity: 0, y },

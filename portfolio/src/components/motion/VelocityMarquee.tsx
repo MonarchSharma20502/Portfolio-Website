@@ -3,13 +3,13 @@
 import {
   motion,
   useMotionValue,
-  useReducedMotion,
   useScroll,
   useSpring,
   useVelocity,
   useTransform,
 } from "framer-motion";
 import { useRef } from "react";
+import { useMountedReducedMotion } from "@/lib/motion";
 
 /**
  * Scroll-velocity marquee.
@@ -31,7 +31,7 @@ export default function VelocityMarquee({
   className?: string;
   baseDuration?: number;
 }) {
-  const reduce = useReducedMotion();
+  const reduce = useMountedReducedMotion();
   const baseX = useMotionValue(0);
   const { scrollY } = useScroll();
   const scrollVelocity = useVelocity(scrollY);

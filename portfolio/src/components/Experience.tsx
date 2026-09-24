@@ -1,17 +1,14 @@
 "use client";
 
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
-import { useEffect, useState, useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 import { profile } from "@/lib/profile";
-import { fadeUp, none, staggerContainer, viewportOnce } from "@/lib/motion";
+import { fadeUp, none, staggerContainer, viewportOnce, useMountedReducedMotion } from "@/lib/motion";
 import Reveal from "./Reveal";
 import SectionLabel from "./motion/SectionLabel";
 
 export default function Experience() {
-  const reduceMotion = useReducedMotion();
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-  const reduce = mounted && reduceMotion;
+  const reduce = useMountedReducedMotion();
   const trackRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: trackRef,

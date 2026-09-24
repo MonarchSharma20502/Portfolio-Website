@@ -1,18 +1,14 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { profile } from "@/lib/profile";
-import { fadeUp, none, staggerContainer, viewportOnce } from "@/lib/motion";
+import { fadeUp, none, staggerContainer, viewportOnce, useMountedReducedMotion } from "@/lib/motion";
 import Reveal from "./Reveal";
 import SpotlightBorder from "./motion/SpotlightBorder";
 import Tilt from "./motion/Tilt";
 
 export default function Projects() {
-  const reduceMotion = useReducedMotion();
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-  const reduce = mounted && reduceMotion;
+  const reduce = useMountedReducedMotion();
   const featured = profile.projects.filter((p) => p.featured);
   const rest = profile.projects.filter((p) => !p.featured);
 
@@ -47,7 +43,14 @@ export default function Projects() {
                 <div className="sheen absolute inset-0 rounded-2xl" />
               </div>
 
-              <div className="relative flex items-start justify-between gap-3">
+              {/* Depth layer: a soft glow that sits behind the card content,
+                  giving the card real thickness on tilt. */}
+              <div
+                aria-hidden="true"
+                className="depth-glow pointer-events-none absolute -inset-6 rounded-3xl bg-gradient-to-tr from-accent/20 via-indigo-400/10 to-transparent opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100"
+              />
+
+              <div className="depth-content relative flex items-start justify-between gap-3">
                 <h3 className="text-lg font-semibold transition group-hover:text-accent">
                   {project.name}
                 </h3>

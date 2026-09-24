@@ -1,4 +1,5 @@
 import type { Variants } from "framer-motion";
+import { useEffect, useState } from "react";
 
 /**
  * Shared motion language for the site.
@@ -11,6 +12,41 @@ import type { Variants } from "framer-motion";
 
 /** Signature easing: natural, slightly cinematic. */
 export const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
+
+/**
+ * Hydration-safe reduced-motion check.
+ *
+ * framer-motion's `useReducedMotion()` reads the media query lazily: it
+ * returns `false` during SSR and on the first client render, and only
+ * resolves to the real value afterwards. Components that branch on it
+ * therefore emit different markup/styles on the server than on the client,
+ * which React reports as a hydration mismatch (#418 / #423).
+ *
+ * This hook pins the value to `false` until the component has mounted, so
+ * the server HTML and the first client render always agree. The real
+ * preference is applied on the next render — one frame later, with no
+ * visible flash, because reduced-motion users were getting the static
+ * markup anyway.
+ *
+ * Use this instead of `useReducedMotion()` in any component that changes
+ * what it *renders* (not just how it animates) based on the preference.
+ */
+export function useMountedReducedMotion(): boolean {
+  const [mounted, setMounted] = useState(false);
+  const [reduced, setReduced] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    if (typeof window === "undefined" || !window.matchMedia) return;
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setReduced(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  return mounted && reduced;
+}
 
 export const fadeUp: Variants = {
   hidden: { opacity: 0, y: 18 },
