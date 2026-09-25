@@ -76,15 +76,19 @@ export default function Reveal({
     return () => observer.disconnect();
   }, [once]);
 
+  // Blur-to-sharp rise: a touch of defocus while the element settles, so
+  // entrances read as coming into focus rather than simply sliding. Filter
+  // is composited, so it never triggers layout.
   const variants: Variants =
     reduce
       ? { hidden: {}, visible: {} }
       : {
-          hidden: { opacity: 0, y },
+          hidden: { opacity: 0, y, filter: "blur(6px)" },
           visible: {
             opacity: 1,
             y: 0,
-            transition: { duration: 0.6, ease: EASE, delay },
+            filter: "blur(0px)",
+            transition: { duration: 0.7, ease: EASE, delay },
           },
         };
 

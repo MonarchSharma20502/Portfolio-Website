@@ -1,11 +1,10 @@
 import { profile } from "@/lib/profile";
 import Reveal from "./Reveal";
 import SectionLabel from "./motion/SectionLabel";
-import OrbitSkills from "./motion/OrbitSkills";
+import DepthCard from "./motion/DepthCard";
+import SpotlightBorder from "./motion/SpotlightBorder";
 
 export default function Skills() {
-  const orbitItems = profile.skills.flatMap((g) => g.items).slice(0, 14);
-
   return (
     <section id="skills" className="section">
       <SectionLabel index="02 / Skills" title="Technologies I work with" />
@@ -18,30 +17,34 @@ export default function Skills() {
       </Reveal>
 
       <div className="mt-10 grid gap-6 sm:grid-cols-2">
-        {profile.skills.map((group) => (
-          <Reveal key={group.category} className="card">
-            <h3 className="font-mono text-sm font-semibold text-accent">
-              {group.category}
-            </h3>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {group.items.map((item) => (
-                <span key={item} className="chip">
-                  {item}
-                </span>
-              ))}
-            </div>
+        {profile.skills.map((group, i) => (
+          <Reveal key={group.category} delay={i * 0.06}>
+            <SpotlightBorder className="h-full rounded-2xl">
+              <DepthCard
+                className="h-full rounded-2xl border border-slate-200 bg-white/80 p-6 shadow-sm transition-colors duration-300 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900/60 dark:hover:border-slate-700"
+                max={5}
+              >
+                <div className="depth-content relative">
+                  <h3 className="font-mono text-sm font-semibold text-accent">
+                    {group.category}
+                  </h3>
+                  <span
+                    aria-hidden="true"
+                    className="mt-3 block h-px w-full bg-gradient-to-r from-slate-200 via-slate-200 to-transparent dark:from-slate-700 dark:via-slate-700"
+                  />
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {group.items.map((item) => (
+                      <span key={item} className="chip">
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </DepthCard>
+            </SpotlightBorder>
           </Reveal>
         ))}
       </div>
-
-      {/* Rotating 3D ring of the full toolset. Falls back to a flat grid
-          under reduced-motion, so nothing is locked behind the animation. */}
-      <Reveal className="mt-16">
-        <h3 className="text-center font-mono text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
-          The full toolset, in orbit
-        </h3>
-        <OrbitSkills items={orbitItems} className="mt-8" />
-      </Reveal>
     </section>
   );
 }

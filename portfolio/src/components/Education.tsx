@@ -26,8 +26,8 @@ export default function Education() {
         {hasEducation && (
           <Reveal className="space-y-6">
             {profile.education.map((edu, i) => (
-              <div key={`${edu.institution}-${i}`} className="card">
-                <h3 className="text-lg font-semibold">{edu.institution}</h3>
+              <div key={`${edu.institution}-${i}`} className="card group">
+                <h3 className="text-lg font-semibold transition-colors group-hover:text-accent">{edu.institution}</h3>
                 {edu.location && (
                   <p className="mt-1 flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
                     <span aria-hidden="true">📍</span>

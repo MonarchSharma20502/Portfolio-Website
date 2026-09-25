@@ -53,7 +53,7 @@ export default function Contact() {
                 href={channel.href}
                 target={channel.href.startsWith("mailto") ? undefined : "_blank"}
                 rel="noopener noreferrer"
-                className="card group hover:border-accent"
+                className="card group hover:border-accent hover:shadow-lg"
               >
                 <span className="text-2xl" aria-hidden="true">
                   {channel.icon}

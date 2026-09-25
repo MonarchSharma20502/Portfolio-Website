@@ -47,23 +47,25 @@ body {
 
   .card {
     @apply rounded-2xl border border-slate-200 bg-white/80 p-6 shadow-sm transition
-           hover:shadow-md hover:border-slate-300
+           hover:-translate-y-1 hover:shadow-lg hover:border-slate-300
            dark:border-slate-800 dark:bg-slate-900/60 dark:hover:border-slate-700;
   }
 
   .chip {
     @apply inline-flex items-center rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700
+           transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.04]
            dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300;
   }
 
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-slate-950
-           transition hover:bg-accent-dark focus-visible:ring-2 focus-visible:ring-accent;
+           transition hover:bg-accent-dark focus-visible:ring-2 focus-visible:ring-accent
+           active:scale-[0.97];
   }
 
   .btn-ghost {
     @apply inline-flex items-center justify-center gap-2 rounded-lg border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700
-           transition hover:bg-slate-100
+           transition hover:bg-slate-100 active:scale-[0.97]
            dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800;
   }
 
@@ -93,26 +95,6 @@ body {
     rgb(56 189 248 / 0.14),
     transparent 45%
   );
-}
-
-/* 3D ring of skill chips. One transform on the container only, so it is
-   effectively free per frame. Disabled under reduced-motion below. */
-@keyframes orbit-spin {
-  from {
-    transform: rotateX(0deg);
-  }
-  to {
-    transform: rotateX(360deg);
-  }
-}
-
-.orbit-ring {
-  animation: orbit-spin 38s linear infinite;
-  transform-style: preserve-3d;
-}
-
-.orbit-ring:hover {
-  animation-duration: 14s;
 }
 
 /* Depth layers used by DepthCard: content floats above the card surface. */

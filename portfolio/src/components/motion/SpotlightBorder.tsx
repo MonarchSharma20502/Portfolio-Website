@@ -1,6 +1,5 @@
 "use client";
 
-import { useMotionValue } from "framer-motion";
 import { useRef } from "react";
 import { useMountedReducedMotion } from "@/lib/motion";
 /**
@@ -23,16 +22,14 @@ export default function SpotlightBorder({
 }) {
   const reduce = useMountedReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
-  const mx = useMotionValue(50);
-  const my = useMotionValue(50);
 
   const onMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (reduce) return;
     const el = ref.current;
     if (!el) return;
     const r = el.getBoundingClientRect();
-    mx.set(((e.clientX - r.left) / r.width) * 100);
-    my.set(((e.clientY - r.top) / r.height) * 100);
+    el.style.setProperty("--spot-x", `${((e.clientX - r.left) / r.width) * 100}%`);
+    el.style.setProperty("--spot-y", `${((e.clientY - r.top) / r.height) * 100}%`);
   };
 
   return (

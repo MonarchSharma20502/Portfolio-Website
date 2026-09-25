@@ -63,15 +63,21 @@ export default function DepthCard({
       onPointerLeave={onLeave}
       whileHover={reduceMotion ? undefined : { scale: 1.02 }}
       transition={{ type: "spring", stiffness: 200, damping: 18 }}
-      style={{
-        transformStyle: "preserve-3d",
-        transform: reduceMotion
-          ? undefined
-          : "perspective(900px) rotateX(var(--dy, 0deg)) rotateY(var(--dx, 0deg))",
-      }}
       className={className}
     >
-      {children}
+      {/* The tilt lives on a plain wrapper, not on the motion.div: Framer
+          Motion owns `transform` on motion elements and would otherwise
+          discard the perspective/rotate string below. */}
+      <div
+        style={{
+          transformStyle: "preserve-3d",
+          transform: reduceMotion
+            ? undefined
+            : "perspective(900px) rotateX(var(--dy, 0deg)) rotateY(var(--dx, 0deg))",
+        }}
+      >
+        {children}
+      </div>
     </motion.div>
   );
 }

@@ -37,7 +37,7 @@ export default function About() {
       </Reveal>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <div className="card">
+        <div className="card group">
           <h3 className="font-mono text-xs font-semibold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400">
             Focus areas
           </h3>
@@ -56,7 +56,7 @@ export default function About() {
           </ul>
         </div>
 
-        <div className="card">
+        <div className="card group">
           <h3 className="font-mono text-xs font-semibold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400">
             Currently exploring
           </h3>
