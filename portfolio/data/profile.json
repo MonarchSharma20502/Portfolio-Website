@@ -111,15 +111,41 @@
   "experience": [
     {
       "company": "SEPL",
-      "title": "Cloud / DevOps Engineer",
-      "start": "2024",
+      "title": "Cloud Engineer",
+      "start": "Jun 2026",
       "end": null,
       "current": true,
-      "summary": "Working on cloud infrastructure, automation and container-based delivery.",
+      "summary": "Working on cloud infrastructure, automation and container-based delivery on Microsoft Azure.",
       "highlights": [
         "Building Azure infrastructure automation with Terraform.",
         "Deploying and operating containerized workloads on Kubernetes.",
         "Standing up CI/CD pipelines for application delivery."
+      ]
+    },
+    {
+      "company": "Celebal Technologies",
+      "title": "Azure Cloud Engineer",
+      "start": "Apr 2024",
+      "end": "Feb 2026",
+      "current": false,
+      "summary": "Joined as a Software Engineer and grew into an Azure Cloud Engineer role, working on cloud infrastructure, deployments and automation.",
+      "highlights": [
+        "Designed and managed Azure cloud resources and deployments.",
+        "Automated infrastructure and deployment workflows.",
+        "Collaborated on delivering and operating cloud-based applications."
+      ]
+    },
+    {
+      "company": "Zeetron Networks",
+      "title": "Machine Learning & Data Science Analyst",
+      "start": "May 2023",
+      "end": "Jun 2023",
+      "current": false,
+      "summary": "Training and internship focused on machine learning and data science, building practical skills across the full ML workflow from raw data to a deployed model.",
+      "highlights": [
+        "Worked with Python data-science libraries including pandas, NumPy, Matplotlib and SciPy.",
+        "Practised data pre-processing, model building and the fundamentals of machine learning algorithms.",
+        "Gained exposure to model deployment and how ML work translates into real-world projects."
       ]
     }
   ],
