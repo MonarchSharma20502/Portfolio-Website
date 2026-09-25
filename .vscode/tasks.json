@@ -1781,6 +1781,159 @@
 				"c:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\_work\\final-status.ps1"
 			],
 			"isBackground": false
+		},
+		{
+			"label": "rebuild-export-4322",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"c:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\_work\\rebuild.ps1"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "rebuild-export-v2",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-NoProfile",
+				"-File",
+				"c:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\_work\\rebuild2.ps1"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "rebuild-export-v3",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-NoProfile",
+				"-File",
+				"c:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\_work\\rebuild3.ps1"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "rebuild-export-v4",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-NoProfile",
+				"-File",
+				"c:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\_work\\rebuild4.ps1"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "rebuild-export-v5",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-NoProfile",
+				"-File",
+				"c:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\_work\\rebuild5.ps1"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "check-procs-1",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-NoProfile",
+				"-File",
+				"c:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\_work\\check-procs.ps1"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "status-check-2",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-NoProfile",
+				"-File",
+				"c:\\Users\\monar\\OneDrive - Surbhi Electron1et Private Limited (SEPL)\\Desktop\\Portfolio Website\\_work\\status2.ps1"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "status-check-3",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-NoProfile",
+				"-File",
+				"c:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\_work\\status2.ps1"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "status-check-4",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-NoProfile",
+				"-File",
+				"c:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\_work\\status3.ps1"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "build-final-clean",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-NoProfile",
+				"-File",
+				"c:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\_work\\build-final.ps1"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "serve-persist-4322",
+			"type": "shell",
+			"command": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-NoProfile",
+				"-File",
+				"C:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\_work\\serve-persist.ps1"
+			],
+			"isBackground": false,
+			"group": "build"
 		}
 	]
 }
