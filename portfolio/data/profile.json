@@ -290,6 +290,14 @@
       "start": "2021",
       "end": "2025",
       "current": false
+    },
+    {
+      "institution": "Yadav Public Senior Secondary School",
+      "location": "Jodhpur, Rajasthan, India",
+      "degree": "Schooling",
+      "start": "2017",
+      "end": "2021",
+      "current": false
     }
   ],
   "certifications": [

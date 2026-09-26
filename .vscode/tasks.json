@@ -1934,6 +1934,20 @@
 			],
 			"isBackground": false,
 			"group": "build"
+		},
+		{
+			"label": "rebuild-edu-4322",
+			"type": "shell",
+			"command": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+			"args": [
+				"-ExecutionPolicy",
+				"Bypass",
+				"-NoProfile",
+				"-File",
+				"c:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\_work\\rebuild-edu.ps1"
+			],
+			"isBackground": false,
+			"group": "build"
 		}
 	]
 }
