@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
+import { MotionConfig } from "framer-motion";
 import "./globals.css";
 import { profile } from "@/lib/profile";
+import AmbientBackground from "@/components/motion/AmbientBackground";
+import ScrollProgress from "@/components/motion/ScrollProgress";
+import TopologyBackground from "@/components/motion/TopologyBackground";
+import ScrollSceneCanvasLazy from "@/components/three/ScrollSceneCanvasLazy";
 
 // profile.avatar is site-absolute ("/Portfolio-Website/avatar.png"). Next.js
 // prepends basePath to relative metadata image URLs and then resolves them
@@ -99,7 +104,18 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100`}
       >
-        {children}
+        <MotionConfig reducedMotion="user">
+          <ScrollProgress />
+          <AmbientBackground />
+          <TopologyBackground />
+          {/* Persistent WebGL depth layer: a particle field that turns and
+              recedes continuously as the page scrolls. The lazy() boundary
+              lives in a Client Component (ScrollSceneCanvasLazy) so three.js
+              never enters the initial bundle, and it is disabled entirely
+              under reduced-motion. */}
+          <ScrollSceneCanvasLazy />
+          {children}
+        </MotionConfig>
       </body>
     </html>
   );

@@ -10,6 +10,15 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
+  /* Decorative parallax blobs and marquee tracks intentionally extend past
+     the viewport edges. `clip` (not `hidden`) keeps them from creating
+     horizontal scrollbars without turning html into a scroll container,
+     which would break position: sticky/fixed layers. */
+  overflow-x: clip;
+}
+
+body {
+  overflow-x: clip;
 }
 
 @layer base {
@@ -38,23 +47,25 @@ html {
 
   .card {
     @apply rounded-2xl border border-slate-200 bg-white/80 p-6 shadow-sm transition
-           hover:shadow-md hover:border-slate-300
+           hover:-translate-y-1 hover:shadow-lg hover:border-slate-300
            dark:border-slate-800 dark:bg-slate-900/60 dark:hover:border-slate-700;
   }
 
   .chip {
     @apply inline-flex items-center rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700
+           transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.04]
            dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300;
   }
 
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-5 py-2.5 text-sm font-semibold text-slate-950
-           transition hover:bg-accent-dark focus-visible:ring-2 focus-visible:ring-accent;
+           transition hover:bg-accent-dark focus-visible:ring-2 focus-visible:ring-accent
+           active:scale-[0.97];
   }
 
   .btn-ghost {
     @apply inline-flex items-center justify-center gap-2 rounded-lg border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700
-           transition hover:bg-slate-100
+           transition hover:bg-slate-100 active:scale-[0.97]
            dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800;
   }
 
@@ -64,26 +75,71 @@ html {
   }
 }
 
-/* Subtle entrance animation used with the Reveal wrapper component */
+/* Subtle entrance animation used with the Reveal wrapper component.
+   Defensive: content must never stay invisible. Framer Motion writes
+   opacity:0 as an inline style while waiting for whileInView, which beats
+   any normal class, so the reduced-motion override uses !important. */
 .reveal {
   opacity: 0;
 }
 
 .reveal.is-visible {
+  opacity: 1;
   animation: fade-in-up 0.6s ease-out both;
+}
+
+/* Cursor-following sheen on project cards */
+.sheen {
+  background: radial-gradient(
+    500px circle at var(--sheen-x, 50%) var(--sheen-y, 50%),
+    rgb(56 189 248 / 0.14),
+    transparent 45%
+  );
+}
+
+/* Depth layers used by DepthCard: content floats above the card surface. */
+.depth-content {
+  transform: translateZ(34px);
+  transform-style: preserve-3d;
+}
+
+.depth-glow {
+  transform: translateZ(-26px);
+  transform-style: preserve-3d;
+}
+
+/* Light band sweeping across ShimmerText. Disabled under reduced-motion by
+   the media query below (animation-name: none). */
+@keyframes shimmer-sweep {
+  0% {
+    background-position: 120% 0;
+  }
+  100% {
+    background-position: -120% 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
+  /* Inline opacity:0 from Framer Motion would otherwise hide content. */
   .reveal {
-    opacity: 1;
+    opacity: 1 !important;
     animation: none !important;
+  }
+  /* Same problem for entrance animations applied directly by motion
+     components (Stats, Projects, Experience) rather than via <Reveal>.
+     Framer bakes opacity:0 into the SSR HTML as an inline style, which
+     beats any normal class, so the override has to be !important. */
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
   }
   * {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    animation-name: none !important;
   }
 }

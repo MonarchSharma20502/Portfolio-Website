@@ -1,5 +1,7 @@
 import { profile } from "@/lib/profile";
 import Reveal from "./Reveal";
+import Magnetic from "./motion/Magnetic";
+import ParallaxLayer from "./motion/ParallaxLayer";
 
 export default function Contact() {
   const channels = [
@@ -24,7 +26,15 @@ export default function Contact() {
   ] as const;
 
   return (
-    <section id="contact" className="section">
+    <section id="contact" className="section relative">
+      {/* Parallax depth drifting behind the contact card. */}
+      <ParallaxLayer
+        speed={-0.4}
+        className="pointer-events-none absolute -left-24 top-0 -z-10"
+      >
+        <div className="h-64 w-64 rounded-full bg-indigo-400/10 blur-3xl dark:bg-indigo-500/[0.07]" />
+      </ParallaxLayer>
+
       <Reveal>
         <div className="rounded-3xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white p-8 dark:border-slate-800 dark:from-slate-900 dark:to-slate-950 sm:p-12">
           <p className="section-title">06 / Contact</p>
@@ -43,7 +53,7 @@ export default function Contact() {
                 href={channel.href}
                 target={channel.href.startsWith("mailto") ? undefined : "_blank"}
                 rel="noopener noreferrer"
-                className="card group hover:border-accent"
+                className="card group hover:border-accent hover:shadow-lg"
               >
                 <span className="text-2xl" aria-hidden="true">
                   {channel.icon}
@@ -59,17 +69,21 @@ export default function Contact() {
           </div>
 
           <div className="mt-8 flex flex-wrap gap-3">
-            <a href={`mailto:${profile.email}`} className="btn-primary">
-              Say hello
-            </a>
-            <a
-              href={profile.linkedin.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-ghost"
-            >
-              Connect on LinkedIn →
-            </a>
+            <Magnetic strength={0.4}>
+              <a href={`mailto:${profile.email}`} className="btn-primary">
+                Say hello
+              </a>
+            </Magnetic>
+            <Magnetic strength={0.4}>
+              <a
+                href={profile.linkedin.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-ghost"
+              >
+                Connect on LinkedIn →
+              </a>
+            </Magnetic>
           </div>
         </div>
       </Reveal>
