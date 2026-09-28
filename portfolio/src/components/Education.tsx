@@ -24,9 +24,9 @@ export default function Education() {
 
       <div className="mt-8 grid gap-8 md:grid-cols-[1fr_1.2fr]">
         {hasEducation && (
-          <Reveal className="space-y-6">
+          <Reveal className="flex h-full flex-col justify-between gap-6">
             {profile.education.map((edu, i) => (
-              <div key={`${edu.institution}-${i}`} className="card group">
+              <div key={`${edu.institution}-${i}`} className="card group flex-1">
                 <h3 className="text-lg font-semibold transition-colors group-hover:text-accent">{edu.institution}</h3>
                 {edu.location && (
                   <p className="mt-1 flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
@@ -48,12 +48,12 @@ export default function Education() {
         )}
 
         {hasCerts && (
-          <Reveal>
-            <div className="card">
+          <Reveal className="h-full">
+            <div className="card flex h-full flex-col">
               <h3 className="font-mono text-xs font-semibold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400">
                 Certifications
               </h3>
-              <ul className="mt-4 space-y-3">
+              <ul className="mt-4 grid flex-1 content-center gap-x-6 gap-y-3 sm:grid-cols-2">
                 {profile.certifications.map((cert, i) => (
                   <li
                     key={i}
