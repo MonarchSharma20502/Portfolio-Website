@@ -8,6 +8,20 @@ Everything below was verified against the repo as of 2026-09-28.
 
 ---
 
+## Contents
+
+1. [What artifact is generated?](#1-what-artifact-is-generated)
+2. [`path` vs. artifact name: the read side and the write side](#2-path-vs-artifact-name-the-read-side-and-the-write-side)
+3. [Your local `out/` is irrelevant to the deploy](#3-your-local-out-is-irrelevant-to-the-deploy)
+4. [The artifact is the *output*, not the source](#4-the-artifact-is-the-output-not-the-source)
+5. [The one fragile coupling: `path: portfolio/out`](#5-the-one-fragile-coupling-path-portfolioout)
+6. [The three-way `basePath` coupling (the subtler trap)](#6-the-three-way-basepath-coupling-the-subtler-trap)
+7. [Finding: `NEXT_PUBLIC_SITE_URL` is set but never read](#7-finding-next_public_site_url-is-set-but-never-read)
+8. [Quick reference: what lives where](#8-quick-reference-what-lives-where)
+9. [Mental model, one paragraph](#9-mental-model-one-paragraph)
+
+---
+
 ## 1. What artifact is generated?
 
 A **GitHub Pages deployment artifact**: a single `artifact.tar` containing the entire static export
@@ -46,7 +60,105 @@ it operates purely on the artifact. It never reads your source repository.
 
 ---
 
-## 2. Your local `out/` is irrelevant to the deploy
+## 2. `path` vs. artifact name: the read side and the write side
+
+Three questions that tend to arrive together, because they feel like one question.
+
+### Does `portfolio/out` need to exist already?
+
+**No.** Nothing has to pre-exist on the runner except the source code.
+
+The runner starts as a blank, ephemeral VM, and each step creates what the next step needs, in order:
+
+```yaml
+- name: Checkout                 # repo source appears on disk
+- name: Setup Node.js            # Node is installed
+- name: Install dependencies     # node_modules/ created
+- name: Build static site        # <- THIS step creates portfolio/out/
+- name: Upload Pages artifact    # reads the folder the previous step made
+```
+
+`next build` **creates** `out/`; it does not require it. If the folder happens to exist already,
+Next deletes it first and writes fresh. What matters is ordering - the upload step runs *after* the
+build step, which is why the folder is guaranteed to be there by then.
+
+This is also why your local `out/` is irrelevant (section 3): the runner's `out/` is born and dies
+with that single workflow run.
+
+### If it uploads to GitHub storage, why give it `path: portfolio/out`?
+
+Because `path` tells the action where to read **from on the runner's disk** - not where to store
+anything.
+
+The action's whole job is "take whatever is at this path, tar it, upload it." It has no way of
+knowing what you built or where you put it, so `path` is a **required** input (the action's own
+default is `_site/`).
+
+What lands in GitHub's artifact storage is not a folder at all. It is a single tarball filed under
+a **name**:
+
+| Concept | Value | Which side it is |
+|---|---|---|
+| `path` input | `portfolio/out` | a location on the **runner's disk** (read side) |
+| artifact **name** | `github-pages` | a key in **GitHub's artifact storage** (write side) |
+| stored object | `artifact.tar` (gzip) | the bytes, keyed by that name |
+
+The folder name `out` is not preserved anywhere in storage. It is a one-time "look here" pointer
+for a single step, after which the runner is destroyed. The name, by contrast, is load-bearing.
+
+### Does the deploy job read from `out/` automatically?
+
+**No - it cannot. It is a different job on a different VM.**
+
+```mermaid
+flowchart LR
+    subgraph R1["Build job - VM #1"]
+        B1["npm run build"] --> B2["out/ on VM #1's disk"]
+        B2 --> B3["upload-pages-artifact<br/>reads out/, tars it"]
+    end
+    B3 -- "artifact.tar, stored under<br/>the name 'github-pages'" --> S[("GitHub<br/>artifact<br/>storage")]
+    subgraph R2["Deploy job - VM #2"]
+        D1["deploy-pages<br/>downloads by NAME"] --> D2[untar] --> D3["Publish to Pages"]
+    end
+    S --> D1
+```
+
+The two jobs never share a filesystem, and by the time the deploy job starts, VM #1 is already gone.
+So `deploy-pages` locates the site by **artifact name**, not by path: it looks for an artifact named
+exactly `github-pages`, downloads it, untars it and publishes the contents.
+
+That is why the `deploy` job has no `path`, no `with:` and no checkout:
+
+```yaml
+- name: Deploy to GitHub Pages
+  id: deployment
+  uses: actions/deploy-pages@v4     # <- no inputs at all
+```
+
+It needs none, because the artifact name is implied by the Pages contract.
+
+### The name is a contract, not a convenience
+
+Per the action's documentation, if you skip `upload-pages-artifact` and upload your own artifact
+instead, it still *"must be named `github-pages`"* and be *"a single gzip archive containing a
+single tar file."* Get either wrong and `deploy-pages` finds nothing to deploy.
+
+### Facts about artifact storage
+
+- **Artifacts expire.** `retention-days` defaults to **1**, so you have roughly 24 hours to download
+  a run's artifact for inspection (the use case in section 4). After that it is deleted.
+- **Size limits.** 10 GB is the hard maximum; the recommended ceiling is 1 GB, which is also the
+  size Pages officially supports.
+- **No links.** The tar must contain only real files and directories - no symbolic or hard links. A
+  static Next.js export satisfies this trivially.
+
+One distinction worth keeping straight: **GitHub Actions** is the runner / CI engine, while
+**GitHub Pages** is the static-hosting product. They are separate services that happen to integrate
+through this `github-pages` artifact contract.
+
+---
+
+## 3. Your local `out/` is irrelevant to the deploy
 
 The deployed site is **always rebuilt from source** on a fresh `ubuntu-latest` runner. Nothing in the
 workflow uploads your local build output, and it could not even if it wanted to - the root
@@ -74,7 +186,7 @@ since the runner's Node version, env vars and clean install differ from yours.
 
 ---
 
-## 3. The artifact is the *output*, not the source
+## 4. The artifact is the *output*, not the source
 
 `artifact.tar` is a snapshot of **compiled output**: minified JS in `/_next/static/`, pre-rendered
 HTML for every route, asset URLs with the `/Portfolio-Website` prefix already baked in. It contains
@@ -100,6 +212,9 @@ from source.
 
    (On Windows, `tar` is available in PowerShell on Windows 10+; or use 7-Zip / WSL.)
 
+   > Artifacts are deleted after roughly 24 hours (`retention-days` defaults to 1), so download
+   > promptly - see section 2.
+
 ### What to check once you have it
 
 | Symptom on the live site | What to look for in the artifact |
@@ -111,7 +226,7 @@ from source.
 
 ---
 
-## 4. The one fragile coupling: `path: portfolio/out`
+## 5. The one fragile coupling: `path: portfolio/out`
 
 `next build` writes the export to a directory chosen by Next config; the workflow **hardcodes** that
 same directory. If the two ever disagree, the build fails.
@@ -147,7 +262,7 @@ happens. If you ever set `distDir: "export"` (or similar) in `next.config.mjs`, 
 
 ---
 
-## 5. The three-way `basePath` coupling (the subtler trap)
+## 6. The three-way `basePath` coupling (the subtler trap)
 
 `basePath` and `assetPrefix` in `next.config.mjs` are gated on `NODE_ENV === "production"`:
 
@@ -180,7 +295,7 @@ updating in lockstep - otherwise every asset request 404s and the site loads uns
 
 ---
 
-## 6. Finding: `NEXT_PUBLIC_SITE_URL` is set but never read
+## 7. Finding: `NEXT_PUBLIC_SITE_URL` is set but never read
 
 `deploy.yml` passes this env var into the build:
 
@@ -227,7 +342,7 @@ safe change. (Not done here since you only asked for documentation.)
 
 ---
 
-## 7. Quick reference: what lives where
+## 8. Quick reference: what lives where
 
 | Thing | Location | Notes |
 |---|---|---|
@@ -240,7 +355,7 @@ safe change. (Not done here since you only asked for documentation.)
 
 ---
 
-## 8. Mental model, one paragraph
+## 9. Mental model, one paragraph
 
 A push to `main` triggers `deploy.yml`, which checks out the source on a throwaway Linux VM, runs
 `npm ci` and `npm run build`, and gets a fresh `portfolio/out/`. It tars that folder into

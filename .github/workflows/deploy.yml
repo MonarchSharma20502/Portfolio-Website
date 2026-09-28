@@ -9,6 +9,10 @@
 # local portfolio/out/ folder is never uploaded, so local build output has
 # no effect on what gets published.
 
+
+
+# CONTINUOUS INTEGRATION (CI) JOB
+
 name: Deploy to GitHub Pages
 
 # When should this pipeline run?
@@ -25,7 +29,7 @@ on:
 # This prevents two builds from racing to publish and keeps deploys fast.
 concurrency:
   group: pages # all runs share one "pages" slot
-  cancel-in-progress: true # kill the in-flight run, let the newest win
+  cancel-in-progress: true # kill the in-flight run, let the newest win (only the newer is let to run)
 
 # What this workflow is allowed to do on GitHub. Least-privilege by default;
 # each token is granted only the access a step actually needs.
@@ -88,6 +92,9 @@ jobs:
         with:
           path: portfolio/out # the folder next build just produced
 
+
+
+# CONTINUOUS DEPLOYMENT (CD) JOB
   # ---------------------------------------------------------------------------
   # JOB 2: Deploy. Takes the artifact from the build job and publishes it to
   # the live GitHub Pages URL. Does not touch the source code at all.
