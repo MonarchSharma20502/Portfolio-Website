@@ -1,57 +1,109 @@
+# CI/CD pipeline: build the Next.js static export and publish it to GitHub
+# Pages. Triggered by any push to main (or manually from the Actions tab).
+#
+# Two jobs, run in order:
+#   build   -> checkout -> install -> next build -> package portfolio/out
+#   deploy  -> publish that package to the Pages environment
+#
+# The deployed site is ALWAYS rebuilt from source on GitHub's runners. Your
+# local portfolio/out/ folder is never uploaded, so local build output has
+# no effect on what gets published.
+
 name: Deploy to GitHub Pages
 
+# When should this pipeline run?
 on:
+  # Automatically, on every commit pushed to main.
   push:
     branches: [main]
+  # Manually, via the "Run workflow" button in the Actions tab (useful for
+  # redeploying without a new commit, e.g. after fixing a Pages setting).
   workflow_dispatch:
 
-# Only one deployment at a time.
+# Only one deployment at a time. If a new push lands while a previous run is
+# still going, the older run is cancelled instead of queuing behind it.
+# This prevents two builds from racing to publish and keeps deploys fast.
 concurrency:
-  group: pages
-  cancel-in-progress: true
+  group: pages # all runs share one "pages" slot
+  cancel-in-progress: true # kill the in-flight run, let the newest win
 
+# What this workflow is allowed to do on GitHub. Least-privilege by default;
+# each token is granted only the access a step actually needs.
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: read # clone the repo (checkout step)
+  pages: write # publish to GitHub Pages (deploy step)
+  id-token: write # mint the OIDC token that authenticates the deploy step
 
 jobs:
+  # ---------------------------------------------------------------------------
+  # JOB 1: Build. Checks out the code, installs dependencies, runs
+  # `next build` to produce the static export, then bundles it into the
+  # artifact format GitHub Pages expects.
+  # ---------------------------------------------------------------------------
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest # GitHub-hosted Linux runner (fresh VM per run)
     steps:
+      # Download the repository source at the pushed commit. Without this
+      # step the runner has an empty workspace.
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Install Node.js 20 and enable npm dependency caching. The cache is
+      # keyed on the lockfile hash, so it invalidates automatically whenever
+      # dependencies change.
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
+          cache: npm # restore ~/.npm so installs are faster on later runs
+          # Only this lockfile decides whether the cache is stale.
           cache-dependency-path: portfolio/package-lock.json
 
+      # Install exact dependency versions from the lockfile. `npm ci` (clean
+      # install) is stricter than `npm install`: it fails if the lockfile and
+      # package.json disagree, and never silently edits the lockfile.
+      # Runs inside portfolio/ because that is where package.json lives.
       - name: Install dependencies
         working-directory: portfolio
         run: npm ci
 
+      # Produce the static site. `next build` with output: "export" in
+      # next.config.mjs writes plain HTML/CSS/JS to portfolio/out, which is
+      # what GitHub Pages can serve (Pages has no Node server at runtime).
       - name: Build static site
         working-directory: portfolio
         run: npm run build
         env:
-          # The site is served from https://<user>.github.io/<repo>
+          # The site is served from https://<user>.github.io/<repo>, so every
+          # absolute asset URL must be prefixed with that base path.
+          # NEXT_PUBLIC_ is Next.js's convention for values exposed to the
+          # browser bundle. Falls back to the computed Pages URL when the
+          # NEXT_PUBLIC_SITE_URL repository variable is not set.
           NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL || format('https://{0}.github.io/{1}', github.repository_owner, github.event.repository.name) }}
 
+      # Bundle portfolio/out into a single tarball understood by the Pages
+      # deployment action. This artifact is what the deploy job consumes.
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: portfolio/out
+          path: portfolio/out # the folder next build just produced
 
+  # ---------------------------------------------------------------------------
+  # JOB 2: Deploy. Takes the artifact from the build job and publishes it to
+  # the live GitHub Pages URL. Does not touch the source code at all.
+  # ---------------------------------------------------------------------------
   deploy:
-    needs: build
+    needs: build # wait for build to finish; skip entirely if it failed
     runs-on: ubuntu-latest
+    # Publishing through the "github-pages" environment lets you see the
+    # deployment in the repo's Environments tab and add approval rules later.
     environment:
       name: github-pages
+      # Surfaces the live URL on the workflow run summary page.
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      # Publish the uploaded artifact to GitHub Pages. The id-token: write
+      # permission above is what lets this step authenticate.
       - name: Deploy to GitHub Pages
-        id: deployment
+        id: deployment # exposes the resulting URL via steps.deployment.outputs
         uses: actions/deploy-pages@v4

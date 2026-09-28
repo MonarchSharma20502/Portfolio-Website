@@ -1,30 +1,57 @@
+# Scheduled data refresh. Pulls your live public GitHub (and optionally
+# LinkedIn) data into portfolio/data/profile.json and commits any changes.
+#
+# One job, four steps:
+#   sync -> checkout -> install Node -> run sync script -> commit + push
+#
+# IMPORTANT: this workflow OVERWRITES GitHub-sourced fields in profile.json
+# (name, location, company, email, projects). Hand-curated fields (about,
+# skills, experience, education, certifications) are preserved by the script.
+# If you hand-edit a GitHub-sourced field, this job will revert it.
+
 name: Auto-sync profile
 
+# When should this pipeline run?
 on:
-  # Refresh every day at 06:00 UTC and whenever the workflow is run manually.
+  # Automatically, once per day. GitHub only guarantees "about" this time,
+  # and delayed or skipped runs are normal during periods of high load.
   schedule:
-    - cron: "0 6 * * *"
+    - cron: "0 6 * * *" # 06:00 UTC every day (5 fields: min hour day month weekday)
+  # Manually, via the "Run workflow" button in the Actions tab. Use this to
+  # test a sync immediately instead of waiting for the next scheduled run.
   workflow_dispatch:
 
-# Auto-commits use the built-in GITHUB_TOKEN, scoped to this repo.
+# The workflow commits back to the repo, so it needs write access.
 permissions:
-  contents: write
+  contents: write # push the auto-generated commit to main
 
 jobs:
+  # ---------------------------------------------------------------------------
+  # JOB: sync. Refreshes profile.json from live data and commits the result.
+  # ---------------------------------------------------------------------------
   sync:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest # GitHub-hosted Linux runner (fresh VM per run)
     steps:
+      # Download the repository source. Needed so the sync script has
+      # profile.json to read and git history to commit against.
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Install Node.js 20 to run the sync script. No dependency install step
+      # is needed: scripts/sync-profile.mjs uses only Node's built-in modules
+      # (fs, fetch), so node_modules is never touched here.
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
+      # Fetch live data and merge it into profile.json. The script merges
+      # rather than replaces, so hand-written sections survive (see the
+      # mergeProfile() function in the script).
       - name: Refresh profile.json from GitHub (and LinkedIn if configured)
-        working-directory: portfolio
+        working-directory: portfolio # the script path is relative to portfolio/
         env:
+          # Which GitHub account to read. Hardcoded to your username.
           GITHUB_USERNAME: MonarchSharma20502
           # Optional: raises the GitHub API rate limit from 60 to 5000/hr.
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -32,14 +59,23 @@ jobs:
           LINKEDIN_JSON_URL: ${{ secrets.LINKEDIN_JSON_URL }}
         run: node scripts/sync-profile.mjs
 
+      # Commit profile.json only if the sync actually changed it. The whole
+      # step is a shell block (|) because it needs several git commands plus
+      # conditional logic.
       - name: Commit changes
         run: |
+          # Identify the committer as the Actions bot, not your account, so
+          # these automated commits are easy to tell apart from your own.
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # git diff --quiet exits 0 when there is nothing to change.
           if git diff --quiet portfolio/data/profile.json; then
             echo "No changes to commit."
           else
             git add portfolio/data/profile.json
+            # [skip ci] stops this commit from re-triggering the deploy
+            # pipeline, which would otherwise run on every daily sync.
             git commit -m "chore(data): auto-sync profile from GitHub/LinkedIn [skip ci]"
             git push
           fi
