@@ -11,15 +11,16 @@ Everything below was verified against the repo as of 2026-09-28.
 ## Contents
 
 1. [What artifact is generated?](#1-what-artifact-is-generated)
-2. [`path` vs. artifact name: the read side and the write side](#2-path-vs-artifact-name-the-read-side-and-the-write-side)
-3. [Are `sync.yml` and `deploy.yml` sequenced? (no - and the chain is cut on purpose)](#3-are-syncyml-and-deployyml-sequenced-no---and-the-chain-is-cut-on-purpose)
-4. [Your local `out/` is irrelevant to the deploy](#4-your-local-out-is-irrelevant-to-the-deploy)
-5. [The artifact is the *output*, not the source](#5-the-artifact-is-the-output-not-the-source)
-6. [The one fragile coupling: `path: portfolio/out`](#6-the-one-fragile-coupling-path-portfolioout)
-7. [The three-way `basePath` coupling (the subtler trap)](#7-the-three-way-basepath-coupling-the-subtler-trap)
-8. [Finding: `NEXT_PUBLIC_SITE_URL` is set but never read](#8-finding-next_public_site_url-is-set-but-never-read)
-9. [Quick reference: what lives where](#9-quick-reference-what-lives-where)
-10. [Mental model, one paragraph](#10-mental-model-one-paragraph)
+2. [Where `out/` comes from: `output: "export"`](#2-where-out-comes-from-output-export)
+3. [`path` vs. artifact name: the read side and the write side](#3-path-vs-artifact-name-the-read-side-and-the-write-side)
+4. [Are `sync.yml` and `deploy.yml` sequenced? (no - and the chain is cut on purpose)](#4-are-syncyml-and-deployyml-sequenced-no---and-the-chain-is-cut-on-purpose)
+5. [Your local `out/` is irrelevant to the deploy](#5-your-local-out-is-irrelevant-to-the-deploy)
+6. [The artifact is the *output*, not the source](#6-the-artifact-is-the-output-not-the-source)
+7. [The one fragile coupling: `path: portfolio/out`](#7-the-one-fragile-coupling-path-portfolioout)
+8. [The three-way `basePath` coupling (the subtler trap)](#8-the-three-way-basepath-coupling-the-subtler-trap)
+9. [Finding: `NEXT_PUBLIC_SITE_URL` is set but never read](#9-finding-next_public_site_url-is-set-but-never-read)
+10. [Quick reference: what lives where](#10-quick-reference-what-lives-where)
+11. [Mental model, one paragraph](#11-mental-model-one-paragraph)
 
 ---
 
@@ -61,7 +62,98 @@ it operates purely on the artifact. It never reads your source repository.
 
 ---
 
-## 2. `path` vs. artifact name: the read side and the write side
+## 2. Where `out/` comes from: `output: "export"`
+
+Everything in this document is about one folder. Before the couplings and the artifact contract,
+it is worth understanding what actually *makes* that folder, because it is the foundation the rest
+of the pipeline stands on.
+
+### One config line changes what `next build` does
+
+In `portfolio/next.config.mjs`:
+
+```js
+const nextConfig = {
+  reactStrictMode: true,
+  // Static export so the site can be hosted on GitHub Pages with no server.
+  output: "export",
+  ...
+};
+```
+
+Without that line, `next build` produces `.next/` - an optimized bundle meant to be served **by a
+running Node server**. With it, Next instead walks every route, renders it to plain HTML, and writes
+a **static website** to `out/`.
+
+The distinction is not cosmetic. A Next app is dynamic by default: it can run server code, talk to
+databases, optimize images on the fly. GitHub Pages can do none of that - it is a static file host
+with no Node runtime and no server process. `output: "export"` is the bridge: it converts the
+dynamic app into something Pages is capable of serving. Without it, this whole deployment setup
+would be impossible.
+
+### What is actually in the folder
+
+Verified by listing `portfolio/out/`:
+
+| Entry | What it is |
+|---|---|
+| `index.html` | The entire single-page app, pre-rendered to HTML |
+| `404.html` | The not-found page |
+| `index.txt` | Plain-text rendering, for crawlers |
+| `avatar.png` | Copied verbatim from `public/` |
+| `_next/static/` | Compiled JS chunks and CSS, with content hashes in the filenames |
+| `_next/<build-id>/` | Build-specific assets |
+
+Note that the HTML references assets via **absolute paths with the basePath already baked in**:
+
+```html
+<link rel="stylesheet" href="/Portfolio-Website/_next/static/css/280f435d2287f8b1.css"/>
+```
+
+That prefix is why the local server has to strip it (section 8) and why you browse to
+`localhost:4322/Portfolio-Website/` rather than `localhost:4322/`.
+
+### Why the local server must be launched *inside* that folder
+
+`_work/serve-out.js` never asks where the site is. It serves whatever folder it was launched from:
+
+```js
+const root = process.cwd();
+```
+
+There is no argument for it, no config file, no default. `process.cwd()` is the **only** input, so
+the `cd` is not a convenience step - it *is* the configuration:
+
+| Launched from | Result |
+|---|---|
+| `portfolio/out` | the built site |
+| `portfolio` | source code - every request 404s |
+| workspace root | `README.md`, `_work/`, `.git/` - not a website |
+
+URLs then resolve against that root:
+
+```js
+let filePath = path.join(root, urlPath);   // root + requested path
+```
+
+So `npm run build` writes the folder and `serve-out.js` reads it, and the only thing connecting them
+is the directory you happened to be standing in when you started the server.
+
+### `out/` is a build artifact, not source
+
+Three consequences that explain why this folder is treated as disposable everywhere else in this
+document:
+
+1. **It is disposable.** Delete it, run `npm run build`, and it comes back byte-for-byte. Nothing in
+   it is hand-written.
+2. **It is stale right now.** It reflects only the *last* build. Edit a component or `profile.json`
+   and the running server still shows old content until you rebuild.
+3. **It is gitignored.** The root `.gitignore` excludes `out/`, so this folder never reaches GitHub
+   and has no effect on the deployed site - which is rebuilt from source on the runner (section 5).
+
+---
+
+## 3. `path` vs. artifact name: the read side and the write side
 
 Three questions that tend to arrive together, because they feel like one question.
 
@@ -83,7 +175,7 @@ The runner starts as a blank, ephemeral VM, and each step creates what the next 
 Next deletes it first and writes fresh. What matters is ordering - the upload step runs *after* the
 build step, which is why the folder is guaranteed to be there by then.
 
-This is also why your local `out/` is irrelevant (section 4): the runner's `out/` is born and dies
+This is also why your local `out/` is irrelevant (section 5): the runner's `out/` is born and dies
 with that single workflow run.
 
 ### If it uploads to GitHub storage, why give it `path: portfolio/out`?
@@ -147,7 +239,7 @@ single tar file."* Get either wrong and `deploy-pages` finds nothing to deploy.
 ### Facts about artifact storage
 
 - **Artifacts expire.** `retention-days` defaults to **1**, so you have roughly 24 hours to download
-  a run's artifact for inspection (the use case in section 5). After that it is deleted.
+  a run's artifact for inspection (the use case in section 6). After that it is deleted.
 - **Size limits.** 10 GB is the hard maximum; the recommended ceiling is 1 GB, which is also the
   size Pages officially supports.
 - **No links.** The tar must contain only real files and directories - no symbolic or hard links. A
@@ -159,7 +251,7 @@ through this `github-pages` artifact contract.
 
 ---
 
-## 3. Are `sync.yml` and `deploy.yml` sequenced? (no - and the chain is cut on purpose)
+## 4. Are `sync.yml` and `deploy.yml` sequenced? (no - and the chain is cut on purpose)
 
 A natural assumption: the daily sync runs first, fetches fresh data, and *then* the deploy rebuilds
 the site with it. The intended order is right, but the wiring that would make it happen is
@@ -237,7 +329,7 @@ it keeps a deliberate action in the loop before anything reaches production.
 
 ---
 
-## 4. Your local `out/` is irrelevant to the deploy
+## 5. Your local `out/` is irrelevant to the deploy
 
 The deployed site is **always rebuilt from source** on a fresh `ubuntu-latest` runner. Nothing in the
 workflow uploads your local build output, and it could not even if it wanted to - the root
@@ -265,7 +357,7 @@ since the runner's Node version, env vars and clean install differ from yours.
 
 ---
 
-## 5. The artifact is the *output*, not the source
+## 6. The artifact is the *output*, not the source
 
 `artifact.tar` is a snapshot of **compiled output**: minified JS in `/_next/static/`, pre-rendered
 HTML for every route, asset URLs with the `/Portfolio-Website` prefix already baked in. It contains
@@ -305,7 +397,7 @@ from source.
 
 ---
 
-## 6. The one fragile coupling: `path: portfolio/out`
+## 7. The one fragile coupling: `path: portfolio/out`
 
 `next build` writes the export to a directory chosen by Next config; the workflow **hardcodes** that
 same directory. If the two ever disagree, the build fails.
@@ -341,7 +433,7 @@ happens. If you ever set `distDir: "export"` (or similar) in `next.config.mjs`, 
 
 ---
 
-## 7. The three-way `basePath` coupling (the subtler trap)
+## 8. The three-way `basePath` coupling (the subtler trap)
 
 `basePath` and `assetPrefix` in `next.config.mjs` are gated on `NODE_ENV === "production"`:
 
@@ -374,7 +466,7 @@ updating in lockstep - otherwise every asset request 404s and the site loads uns
 
 ---
 
-## 8. Finding: `NEXT_PUBLIC_SITE_URL` is set but never read
+## 9. Finding: `NEXT_PUBLIC_SITE_URL` is set but never read
 
 `deploy.yml` passes this env var into the build:
 
@@ -421,7 +513,7 @@ safe change. (Not done here since you only asked for documentation.)
 
 ---
 
-## 9. Quick reference: what lives where
+## 10. Quick reference: what lives where
 
 | Thing | Location | Notes |
 |---|---|---|
@@ -434,7 +526,7 @@ safe change. (Not done here since you only asked for documentation.)
 
 ---
 
-## 10. Mental model, one paragraph
+## 11. Mental model, one paragraph
 
 A push to `main` triggers `deploy.yml`, which checks out the source on a throwaway Linux VM, runs
 `npm ci` and `npm run build`, and gets a fresh `portfolio/out/`. It tars that folder into
