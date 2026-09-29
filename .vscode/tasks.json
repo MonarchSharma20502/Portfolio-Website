@@ -150,6 +150,123 @@
 			],
 			"isBackground": false,
 			"group": "build"
+		},
+		{
+			"label": "section-build",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"c:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\_work\\section-build.ps1"
+			],
+			"isBackground": true
+		},
+		{
+			"label": "probe3",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"c:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\_work\\probe3.ps1"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "kill2",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"c:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\_work\\kill2.ps1"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "section-build2",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"c:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\_work\\section-build2.ps1"
+			],
+			"isBackground": true
+		},
+		{
+			"label": "kill3",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"c:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\_work\\kill3.ps1"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "section-build3",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"c:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\_work\\section-build3.ps1"
+			],
+			"isBackground": true
+		},
+		{
+			"label": "serve-section",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"c:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\_work\\serve-section.ps1"
+			],
+			"isBackground": true
+		},
+		{
+			"label": "commit4",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"c:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\_work\\commit4.ps1"
+			],
+			"isBackground": false
+		},
+		{
+			"label": "cleanup4",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"c:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\_work\\cleanup4.ps1"
+			],
+			"isBackground": false
 		}
 	]
 }

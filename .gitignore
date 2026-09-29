@@ -42,3 +42,7 @@ dump.pl
 # Local investigation scratch dir: build scripts, trace scripts, screenshots
 _work/
 _baseline/
+
+# Reference images for visual regression testing
+ref-mid.png
+ref-top.png
