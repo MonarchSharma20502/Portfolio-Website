@@ -19,7 +19,7 @@ export default function Stats() {
   ] as const;
 
   return (
-    <section id="stats" className="section py-12">
+    <section id="stats" className="section relative py-12">
       <motion.ul
         data-reveal
         variants={reduce ? none : staggerContainer(0.1)}

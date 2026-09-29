@@ -13,7 +13,7 @@ export default function Projects() {
   const rest = profile.projects.filter((p) => !p.featured);
 
   return (
-    <section id="projects" className="section">
+    <section id="projects" className="section relative">
       <Reveal>
         <p className="section-title">04 / Projects</p>
         <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">

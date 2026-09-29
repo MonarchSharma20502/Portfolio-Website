@@ -21,7 +21,7 @@ export default function Experience() {
   }
 
   return (
-    <section id="experience" className="section">
+    <section id="experience" className="section relative">
       <SectionLabel
         index="03 / Experience"
         title="Where I have worked"

@@ -6,7 +6,7 @@ import SpotlightBorder from "./motion/SpotlightBorder";
 
 export default function Skills() {
   return (
-    <section id="skills" className="section">
+    <section id="skills" className="section relative">
       <SectionLabel index="02 / Skills" title="Technologies I work with" />
 
       <Reveal>

@@ -8,7 +8,7 @@ import Projects from "@/components/Projects";
 import Education from "@/components/Education";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import CurtainReveal from "@/components/motion/CurtainReveal";
+import SectionReveal from "@/components/motion/SectionReveal";
 
 export default function Home() {
   return (
@@ -16,21 +16,27 @@ export default function Home() {
       <Navbar />
       <main id="main">
         <Hero />
-        <CurtainReveal>
+        <SectionReveal>
           <About />
-        </CurtainReveal>
-        <Stats />
-        <CurtainReveal>
+        </SectionReveal>
+        <SectionReveal>
+          <Stats />
+        </SectionReveal>
+        <SectionReveal>
           <Skills />
-        </CurtainReveal>
-        <CurtainReveal>
+        </SectionReveal>
+        <SectionReveal>
           <Experience />
-        </CurtainReveal>
-        <CurtainReveal>
+        </SectionReveal>
+        <SectionReveal>
           <Projects />
-        </CurtainReveal>
-        <Education />
-        <Contact />
+        </SectionReveal>
+        <SectionReveal>
+          <Education />
+        </SectionReveal>
+        <SectionReveal>
+          <Contact />
+        </SectionReveal>
       </main>
       <Footer />
     </>

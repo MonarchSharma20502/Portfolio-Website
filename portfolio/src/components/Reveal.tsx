@@ -79,16 +79,20 @@ export default function Reveal({
   // Blur-to-sharp rise: a touch of defocus while the element settles, so
   // entrances read as coming into focus rather than simply sliding. Filter
   // is composited, so it never triggers layout.
+  //
+  // Kept gentler than the section-level entrance (<SectionReveal />) so the
+  // two read as one movement rather than competing: the section arrives,
+  // then its contents settle inside it.
   const variants: Variants =
     reduce
       ? { hidden: {}, visible: {} }
       : {
-          hidden: { opacity: 0, y, filter: "blur(6px)" },
+          hidden: { opacity: 0, y, filter: "blur(4px)" },
           visible: {
             opacity: 1,
             y: 0,
             filter: "blur(0px)",
-            transition: { duration: 0.7, ease: EASE, delay },
+            transition: { duration: 0.6, ease: EASE, delay },
           },
         };
 

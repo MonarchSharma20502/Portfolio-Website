@@ -27,7 +27,7 @@ export default function Education() {
   }
 
   return (
-    <section id="education" className="section">
+    <section id="education" className="section relative">
       <Reveal>
         <p className="section-title">05 / Education &amp; Certifications</p>
         <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
