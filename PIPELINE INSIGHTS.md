@@ -12,13 +12,14 @@ Everything below was verified against the repo as of 2026-09-28.
 
 1. [What artifact is generated?](#1-what-artifact-is-generated)
 2. [`path` vs. artifact name: the read side and the write side](#2-path-vs-artifact-name-the-read-side-and-the-write-side)
-3. [Your local `out/` is irrelevant to the deploy](#3-your-local-out-is-irrelevant-to-the-deploy)
-4. [The artifact is the *output*, not the source](#4-the-artifact-is-the-output-not-the-source)
-5. [The one fragile coupling: `path: portfolio/out`](#5-the-one-fragile-coupling-path-portfolioout)
-6. [The three-way `basePath` coupling (the subtler trap)](#6-the-three-way-basepath-coupling-the-subtler-trap)
-7. [Finding: `NEXT_PUBLIC_SITE_URL` is set but never read](#7-finding-next_public_site_url-is-set-but-never-read)
-8. [Quick reference: what lives where](#8-quick-reference-what-lives-where)
-9. [Mental model, one paragraph](#9-mental-model-one-paragraph)
+3. [Are `sync.yml` and `deploy.yml` sequenced? (no - and the chain is cut on purpose)](#3-are-syncyml-and-deployyml-sequenced-no---and-the-chain-is-cut-on-purpose)
+4. [Your local `out/` is irrelevant to the deploy](#4-your-local-out-is-irrelevant-to-the-deploy)
+5. [The artifact is the *output*, not the source](#5-the-artifact-is-the-output-not-the-source)
+6. [The one fragile coupling: `path: portfolio/out`](#6-the-one-fragile-coupling-path-portfolioout)
+7. [The three-way `basePath` coupling (the subtler trap)](#7-the-three-way-basepath-coupling-the-subtler-trap)
+8. [Finding: `NEXT_PUBLIC_SITE_URL` is set but never read](#8-finding-next_public_site_url-is-set-but-never-read)
+9. [Quick reference: what lives where](#9-quick-reference-what-lives-where)
+10. [Mental model, one paragraph](#10-mental-model-one-paragraph)
 
 ---
 
@@ -82,7 +83,7 @@ The runner starts as a blank, ephemeral VM, and each step creates what the next 
 Next deletes it first and writes fresh. What matters is ordering - the upload step runs *after* the
 build step, which is why the folder is guaranteed to be there by then.
 
-This is also why your local `out/` is irrelevant (section 3): the runner's `out/` is born and dies
+This is also why your local `out/` is irrelevant (section 4): the runner's `out/` is born and dies
 with that single workflow run.
 
 ### If it uploads to GitHub storage, why give it `path: portfolio/out`?
@@ -146,7 +147,7 @@ single tar file."* Get either wrong and `deploy-pages` finds nothing to deploy.
 ### Facts about artifact storage
 
 - **Artifacts expire.** `retention-days` defaults to **1**, so you have roughly 24 hours to download
-  a run's artifact for inspection (the use case in section 4). After that it is deleted.
+  a run's artifact for inspection (the use case in section 5). After that it is deleted.
 - **Size limits.** 10 GB is the hard maximum; the recommended ceiling is 1 GB, which is also the
   size Pages officially supports.
 - **No links.** The tar must contain only real files and directories - no symbolic or hard links. A
@@ -158,7 +159,85 @@ through this `github-pages` artifact contract.
 
 ---
 
-## 3. Your local `out/` is irrelevant to the deploy
+## 3. Are `sync.yml` and `deploy.yml` sequenced? (no - and the chain is cut on purpose)
+
+A natural assumption: the daily sync runs first, fetches fresh data, and *then* the deploy rebuilds
+the site with it. The intended order is right, but the wiring that would make it happen is
+**deliberately cut**.
+
+### There is no sequencing between them
+
+Neither workflow references the other. No `needs:`, no `workflow_run:` trigger, no shared job graph -
+they are two independent workflows fired by completely different events:
+
+| Workflow | Trigger | Defined in |
+|---|---|---|
+| `sync.yml` | `cron: "0 6 * * *"` (daily 06:00 UTC) + manual `workflow_dispatch` | `.github/workflows/sync.yml` |
+| `deploy.yml` | `push` to `main` + manual `workflow_dispatch` | `.github/workflows/deploy.yml` |
+
+So "which runs first" has no fixed answer - it depends entirely on which event fires.
+
+### The chain exists, then `[skip ci]` breaks it
+
+The logic you would expect is genuinely there: sync fetches data, commits `profile.json`, and that
+push would trigger `deploy.yml`. But `sync.yml` cuts the last link:
+
+```yaml
+git commit -m "chore(data): auto-sync profile from GitHub/LinkedIn [skip ci]"
+```
+
+`[skip ci]` is a GitHub Actions convention: a commit whose message contains it does **not** trigger
+workflows that would otherwise run on that push. The comment above it says why:
+
+```yaml
+# [skip ci] stops this commit from re-triggering the deploy
+# pipeline, which would otherwise run on every daily sync.
+```
+
+### What actually happens every day
+
+```mermaid
+flowchart TD
+    A["cron 06:00 UTC"] --> S["sync.yml runs"]
+    S --> S1["fetch GitHub API"]
+    S1 --> S2{"profile.json changed?"}
+    S2 -->|No| Z1["nothing committed<br/>nothing deployed"]
+    S2 -->|Yes| S3["commit + push<br/>message ends in [skip ci]"]
+    S3 -. "push fires, but [skip ci]<br/>suppresses deploy.yml" .-> X["deploy does NOT run"]
+    X --> Z2["live site stays stale until<br/>the next push or manual deploy"]
+```
+
+The outcome is the opposite of what the design suggests: **the pipeline that fetches fresh data runs
+first, and then nothing rebuilds.** New repos, follower counts and contribution stats land in
+`profile.json` on `main` but never reach the live site on their own.
+
+### How the data actually reaches production
+
+1. **You push to `main`** for any reason - a content edit, a typo fix, anything. That push triggers
+   `deploy.yml`, which builds from the *current* `main`, picking up however many daily syncs have
+   accumulated since the last deploy. This is the normal path.
+2. **Manual deploy**: Actions tab -> "Deploy to GitHub Pages" -> Run workflow. Same effect, no
+   commit needed.
+3. **Manual sync + manual deploy**: run "Auto-sync profile" first, then "Deploy to GitHub Pages".
+   Two clicks, fully fresh data now.
+
+### If you want the automatic chain
+
+Remove `[skip ci]` from the commit message in `sync.yml`. Then the chain fires as expected: sync
+commits -> push -> deploy rebuilds -> live site updates, once a day.
+
+The tradeoff (also documented in `README.md` section 6, "One caveat to remember"): one extra deploy
+per day, but only on days where the numbers actually moved - the `git diff --quiet` guard means no
+commit happens when nothing changed, so no deploy either.
+
+The thing to weigh before doing it: it makes the daily sync the thing that publishes your site. If
+the GitHub API ever returns garbage (a renamed repo, a deleted avatar), that garbage commits *and*
+goes live automatically, with no review step in between. `[skip ci]` is arguably a feature here -
+it keeps a deliberate action in the loop before anything reaches production.
+
+---
+
+## 4. Your local `out/` is irrelevant to the deploy
 
 The deployed site is **always rebuilt from source** on a fresh `ubuntu-latest` runner. Nothing in the
 workflow uploads your local build output, and it could not even if it wanted to - the root
@@ -186,7 +265,7 @@ since the runner's Node version, env vars and clean install differ from yours.
 
 ---
 
-## 4. The artifact is the *output*, not the source
+## 5. The artifact is the *output*, not the source
 
 `artifact.tar` is a snapshot of **compiled output**: minified JS in `/_next/static/`, pre-rendered
 HTML for every route, asset URLs with the `/Portfolio-Website` prefix already baked in. It contains
@@ -226,7 +305,7 @@ from source.
 
 ---
 
-## 5. The one fragile coupling: `path: portfolio/out`
+## 6. The one fragile coupling: `path: portfolio/out`
 
 `next build` writes the export to a directory chosen by Next config; the workflow **hardcodes** that
 same directory. If the two ever disagree, the build fails.
@@ -262,7 +341,7 @@ happens. If you ever set `distDir: "export"` (or similar) in `next.config.mjs`, 
 
 ---
 
-## 6. The three-way `basePath` coupling (the subtler trap)
+## 7. The three-way `basePath` coupling (the subtler trap)
 
 `basePath` and `assetPrefix` in `next.config.mjs` are gated on `NODE_ENV === "production"`:
 
@@ -295,7 +374,7 @@ updating in lockstep - otherwise every asset request 404s and the site loads uns
 
 ---
 
-## 7. Finding: `NEXT_PUBLIC_SITE_URL` is set but never read
+## 8. Finding: `NEXT_PUBLIC_SITE_URL` is set but never read
 
 `deploy.yml` passes this env var into the build:
 
@@ -342,7 +421,7 @@ safe change. (Not done here since you only asked for documentation.)
 
 ---
 
-## 8. Quick reference: what lives where
+## 9. Quick reference: what lives where
 
 | Thing | Location | Notes |
 |---|---|---|
@@ -355,7 +434,7 @@ safe change. (Not done here since you only asked for documentation.)
 
 ---
 
-## 9. Mental model, one paragraph
+## 10. Mental model, one paragraph
 
 A push to `main` triggers `deploy.yml`, which checks out the source on a throwaway Linux VM, runs
 `npm ci` and `npm run build`, and gets a fresh `portfolio/out/`. It tars that folder into
