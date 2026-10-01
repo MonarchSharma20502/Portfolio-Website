@@ -13,9 +13,14 @@ website updates itself without you editing a single line of code.
 
 ```
 .
-├── .github/workflows/
-│   ├── deploy.yml          # Builds the site and publishes it to GitHub Pages
-│   └── sync.yml            # Daily job that refreshes profile.json from GitHub/LinkedIn
+├── .github/
+│   ├── workflows/
+│   │   ├── deploy.yml      # Builds the site and publishes it to GitHub Pages
+│   │   └── sync.yml        # Daily job that refreshes profile.json from GitHub/LinkedIn
+│   └── prompts/            # (removed) deployment planning prompt — no longer tracked
+├── Agents/                 # Copilot agent definitions (Animation-Agent, Portfolio-Builder)
+├── Resume/
+│   └── resume.png          # Scanned résumé image (kept for reference)
 ├── portfolio/
 │   ├── data/
 │   │   ├── profile.json    # ← THE single source of truth (all site content)
@@ -37,13 +42,22 @@ website updates itself without you editing a single line of code.
 │   │   │   ├── Skills.tsx      # Skills grouped by category
 │   │   │   ├── Experience.tsx  # Work history timeline
 │   │   │   ├── Projects.tsx    # Featured projects + "more experiments" list
+│   │   │   ├── Education.tsx   # Education & certifications (renders nothing if empty)
 │   │   │   ├── Contact.tsx     # Email / GitHub / LinkedIn channels
 │   │   │   ├── Footer.tsx      # Links + copyright
-│   │   │   └── Reveal.tsx      # Scroll-in fade animation wrapper
+│   │   │   ├── Reveal.tsx      # Scroll-in fade animation wrapper
+│   │   │   ├── motion/         # Reusable motion primitives (SectionReveal, Counter,
+│   │   │   │                   # CursorGlow, Magnetic, Marquee, ParallaxLayer, Tilt, …)
+│   │   │   └── three/          # react-three-fiber scenes (HeroScene, ParticleField,
+│   │   │                       # DistortionOrb, ScrollScene, LazyCanvas, …)
 │   │   └── lib/
+│   │       ├── motion.ts   # Shared motion tokens (easing, reduced-motion helpers)
 │   │       └── profile.ts  # Types profile.json and exports it to the components
 │   ├── next.config.mjs     # output: "export" → static HTML for GitHub Pages
+│   ├── tailwind.config.ts  # Theme tokens, fonts, animation keyframes
+│   ├── tsconfig.json
 │   └── package.json
+├── My Photo.png            # Profile photo source
 └── README.md               # ← you are here
 ```
 
@@ -231,7 +245,7 @@ the numbers move.
 |--------|----------|
 | GitHub profile README + REST API | Name, role, bio, location, stats, repositories, projects, tech stack — **verified** |
 | LinkedIn public profile URL | The contact link only (the profile is behind an auth wall) |
-| Résumé (`Monarch Resume.pdf`) | Could not be parsed — it is a scanned image with no text layer |
+| Résumé (`Resume/resume.png`) | Could not be parsed — it is a scanned image with no text layer |
 
 **Needs your confirmation before publishing:** work experience dates/details, education and
 certifications are currently empty or marked as unverified in `data/profile.raw.json`. Tell me the
