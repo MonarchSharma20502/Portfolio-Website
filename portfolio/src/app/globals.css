@@ -136,6 +136,12 @@ body {
     opacity: 1 !important;
     transform: none !important;
   }
+  /* Curtain panels from <SectionReveal>. They are not rendered at all when
+     reduced motion is requested, but if an inline clip-path ever outlives
+     them this guarantees a section cannot stay covered. */
+  .section-wipe {
+    display: none !important;
+  }
   * {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;

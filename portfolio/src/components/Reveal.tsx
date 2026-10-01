@@ -87,12 +87,12 @@ export default function Reveal({
     reduce
       ? { hidden: {}, visible: {} }
       : {
-          hidden: { opacity: 0, y, filter: "blur(4px)" },
+          hidden: { opacity: 0, y, filter: "blur(2px)" },
           visible: {
             opacity: 1,
             y: 0,
             filter: "blur(0px)",
-            transition: { duration: 0.6, ease: EASE, delay },
+            transition: { duration: 0.5, ease: EASE, delay },
           },
         };
 
