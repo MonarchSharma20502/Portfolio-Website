@@ -267,6 +267,166 @@
 				"c:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\_work\\cleanup4.ps1"
 			],
 			"isBackground": false
+		},
+		{
+			"label": "wipe-build",
+			"type": "shell",
+			"command": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-Command",
+				"Set-Location 'c:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\portfolio'; Get-Process node -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue; Remove-Item -Recurse -Force out, .next -ErrorAction SilentlyContinue; $env:NODE_ENV = 'production'; & 'C:\\Users\\monar\\node-portable\\node-v22.11.0-win-x64\\node.exe' 'C:\\Users\\monar\\node-portable\\node-v22.11.0-win-x64\\node_modules\\npm\\bin\\npm-cli.js' run build *> '_work\\build-wipe-log.txt'; \"EXIT=$LASTEXITCODE\"; Get-Content '_work\\build-wipe-log.txt' | Select-Object -Last 40"
+			],
+			"group": "build"
+		},
+		{
+			"label": "wipe-build2",
+			"type": "shell",
+			"command": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"c:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\_work\\wipe-build.ps1"
+			],
+			"group": "build"
+		},
+		{
+			"label": "wipe-serve",
+			"type": "shell",
+			"command": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"c:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\_work\\wipe-serve.ps1"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "wipe-serve2",
+			"type": "shell",
+			"command": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"c:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\_work\\wipe-serve.ps1"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "commit-wipe",
+			"type": "shell",
+			"command": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"c:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\_work\\commit-wipe.ps1"
+			],
+			"group": "build"
+		},
+		{
+			"label": "verify-commit",
+			"type": "shell",
+			"command": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"c:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\_work\\verify-commit.ps1"
+			],
+			"group": "build"
+		},
+		{
+			"label": "verify-commit",
+			"type": "shell",
+			"command": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"c:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\_work\\verify-commit.ps1"
+			],
+			"group": "build"
+		},
+		{
+			"label": "verify-commit",
+			"type": "shell",
+			"command": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"c:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\_work\\verify-commit.ps1"
+			],
+			"group": "build"
+		},
+		{
+			"label": "wipe-build3",
+			"type": "shell",
+			"command": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"c:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\_work\\wipe-build.ps1"
+			],
+			"group": "build"
+		},
+		{
+			"label": "wipe-serve3",
+			"type": "shell",
+			"command": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"c:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\_work\\wipe-serve.ps1"
+			],
+			"isBackground": true,
+			"group": "build"
+		},
+		{
+			"label": "wipe-build4",
+			"type": "shell",
+			"command": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"c:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\_work\\wipe-build.ps1"
+			],
+			"group": "build"
+		},
+		{
+			"label": "wipe-serve4",
+			"type": "shell",
+			"command": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"c:\\Users\\monar\\OneDrive - Surbhi Electronet Private Limited (SEPL)\\Desktop\\Portfolio Website\\_work\\wipe-serve.ps1"
+			],
+			"isBackground": true,
+			"group": "build"
 		}
 	]
 }
