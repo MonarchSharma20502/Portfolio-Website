@@ -115,7 +115,7 @@ npm run sync -- --dry-run   # preview changes without writing
 
 ---
 
-## 5. The automation (the part you asked for)
+## 5. The automation:
 
 Two GitHub Actions workflows live in `.github/workflows/`.
 
