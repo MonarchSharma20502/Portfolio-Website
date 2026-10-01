@@ -1,40 +1,31 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { EASE, useMountedReducedMotion } from "@/lib/motion";
-
-/** The two curtain surfaces. Opaque gradients that read as a physical
- *  blind rather than a flat colour, so the parting lands as a seam of
- *  light. `section-wipe` is the reduced-motion kill switch (globals.css). */
-const PANEL =
-  "section-wipe pointer-events-none absolute inset-0 z-20 " +
-  "bg-gradient-to-r from-slate-100 via-slate-200 to-slate-100 " +
-  "dark:from-slate-900 dark:via-slate-800 dark:to-slate-900";
 
 /**
  * SectionReveal — the page-level scroll choreography.
  *
- * Each section arrives as its own scene:
+ * Each section settles in as one composed movement: a quiet rise from
+ * opacity 0 that is tied directly to the section's position in the
+ * viewport. Because the entrance is driven by useScroll progress rather
+ * than a one-shot trigger, it tracks the user's scroll speed and
+ * direction — scroll back up and the section recedes again. That
+ * continuous, scroll-following motion is what makes the page read as
+ * scenes arriving one by one, rather than one long document.
  *
- *   1. A curtain of two panels parts vertically as the section enters the
- *      viewport and re-closes as it leaves. It is scroll-linked
- *      (useScroll + useTransform), so the seam tracks the user's scroll
- *      speed and direction — scrub back up and the curtain closes again.
- *      That continuous, scroll-following motion is what makes the page
- *      read as scenes arriving, rather than one long document.
- *   2. Behind it the body rises into focus — large enough to feel
- *      cinematic, but triggered once, so settled content never fidgets.
- *   3. A thin accent rail on the left edge fills over the section's whole
- *      journey through view.
+ * Deliberately there is no masking panel or clip-path here. A covering
+ * slab reads as a hard edit between shots; this is meant to read as
+ * content smoothly coming into view, so it is opacity + transform only.
  *
- * The panels are driven with clipPath rather than y, so they can never
- * paint outside the section's bounds — no overflow, no extra scrollbar,
- * no covering a neighbouring section. Everything else here is
- * transform/opacity/filter only, so nothing can shift layout.
+ *   1. The section body rises into view (opacity + y), following scroll
+ *      progress.
+ *   2. A thin accent rail on the left edge fills as the section scrolls
+ *      through the viewport — scrub back up and it empties again.
  *
- * Reduced motion: no panels, no rail, static content — nothing is ever
- * gated behind animation.
+ * Reduced motion: the rail renders full and the body is static — content
+ * is never gated behind animation.
  */
 export default function SectionReveal({
   children,
@@ -45,29 +36,38 @@ export default function SectionReveal({
 }) {
   const reduce = useMountedReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
+  const bodyRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     // Measure from "section enters at the bottom" to "section leaves at the
     // top" so the rail tracks the section's whole journey through view.
     offset: ["start end", "end start"],
   });
-  // The parting. The two panels are staggered slightly (0.38 vs 0.44) so
-  // the seam widens asymmetrically and reads as light, not as two slabs.
-  // inset() clips inward from one edge, so each panel retracts *inside*
-  // the section bounds and can never overlap a neighbour.
-  const topClip = useTransform(
-    scrollYProgress,
-    [0, 0.38],
-    ["inset(0 0 0 0)", "inset(0 0 100% 0)"]
-  );
-  const bottomClip = useTransform(
-    scrollYProgress,
-    [0, 0.44],
-    ["inset(0 0 0 0)", "inset(100% 0 0 0)"]
-  );
+
+  // The entrance. Held at opacity 0 / y 40 while the section is below the
+  // fold, resolving to settled over the first part of its entry. The small
+  // dead zone at the start keeps the section from beginning to rise while
+  // it is still entirely off-screen.
+  const bodyOpacity = useTransform(scrollYProgress, [0.02, 0.22], [0, 1]);
+  const bodyY = useTransform(scrollYProgress, [0.02, 0.22], [40, 0]);
 
   const railScale = useTransform(scrollYProgress, [0.05, 0.55], [0, 1]);
   const railOpacity = useTransform(scrollYProgress, [0, 0.06, 0.9, 1], [0, 1, 1, 0.35]);
+
+  // Safety net: scroll-linked values are driven by useScroll, which only
+  // updates on scroll/resize. If this component mounts while the section is
+  // already in view (deep link, refresh mid-page) the values would stay at
+  // their initial 0 until the first scroll. Forcing an early update makes
+  // such a section visible immediately.
+  useEffect(() => {
+    if (reduce) return;
+    const el = ref.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    if (rect.bottom < 0 || rect.top < window.innerHeight * 0.9) {
+      scrollYProgress.set(Math.min(0.3, scrollYProgress.get() + 0.3));
+    }
+  }, [reduce, scrollYProgress]);
 
   if (reduce) {
     return (
@@ -79,9 +79,6 @@ export default function SectionReveal({
 
   return (
     <div ref={ref} className={`relative ${className}`}>
-      {/* Curtain: the top panel retracts upward, the bottom one downward. */}
-      <motion.div aria-hidden="true" className={PANEL} style={{ clipPath: topClip }} />
-      <motion.div aria-hidden="true" className={PANEL} style={{ clipPath: bottomClip }} />
       {/* Scroll-progress rail on the section's left edge. */}
       <div
         aria-hidden="true"
@@ -93,10 +90,9 @@ export default function SectionReveal({
         />
       </div>
       <motion.div
-        initial={{ opacity: 0, y: 46, filter: "blur(10px)" }}
-        whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-        viewport={{ once: true, margin: "-10% 0px" }}
-        transition={{ duration: 1.0, ease: EASE }}
+        ref={bodyRef}
+        style={{ opacity: bodyOpacity, y: bodyY }}
+        transition={{ duration: 0.9, ease: EASE }}
       >
         {children}
       </motion.div>
