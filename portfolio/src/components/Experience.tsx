@@ -30,7 +30,7 @@ export default function Experience() {
 
       <div ref={trackRef} className="relative mt-10">
         {/* Track base */}
-        <div className="absolute bottom-0 left-0 top-0 w-px bg-slate-200 dark:bg-slate-800" />
+        <div className="absolute bottom-0 left-0 top-0 w-px bg-slate-300 dark:bg-slate-800" />
         {/* Accent line that draws itself in as the timeline scrolls into view */}
         <motion.div
           style={{ scaleY: lineScale }}
@@ -65,7 +65,7 @@ export default function Experience() {
                         },
                       }
                 }
-                className="absolute -left-[7px] top-1.5 h-3 w-3 rounded-full bg-accent ring-4 ring-white dark:ring-slate-950"
+                className="absolute -left-[7px] top-1.5 h-3 w-3 rounded-full bg-accent ring-4 ring-slate-50 dark:ring-slate-950"
               />
 
               <div className="flex flex-wrap items-baseline justify-between gap-x-4">
