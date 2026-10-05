@@ -20,9 +20,8 @@ export default function Projects() {
           Things I have built
         </h2>
         <p className="mt-3 max-w-2xl text-slate-600 dark:text-slate-300">
-          Infrastructure automation, Kubernetes deployments and CI/CD
-          experiments. This list is generated from my public GitHub
-          repositories.
+          A selection of cloud infrastructure, automation and AI projects I
+          have delivered across Azure engagements.
         </p>
       </Reveal>
 
@@ -127,7 +126,7 @@ function GitHubLink({ repo }: { repo: string }) {
       href={repo}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="View repository on GitHub"
+      aria-label="View projects on GitHub"
       className="text-slate-400 transition hover:text-accent"
     >
       <svg

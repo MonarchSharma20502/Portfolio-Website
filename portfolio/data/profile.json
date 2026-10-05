@@ -161,135 +161,61 @@
   ],
   "projects": [
     {
-      "name": "K8S-Mongo-Application",
-      "description": "MongoDB + Mongo Express application deployed on a Kubernetes cluster using Minikube. Covers Deployments, Services, Secrets and ConfigMaps.",
+      "name": "Databricks Infrastructure Automation",
+      "description": "Automated provisioning and configuration of Azure services for Databricks — Logic Apps, API Management, Event Hub, clusters, VMs and storage — reducing manual effort and speeding up deployments. Implemented version control and Terraform-based IaC with private connectivity, improving security, consistency and maintainability across environments.",
       "tech": [
-        "Kubernetes",
-        "MongoDB",
-        "Mongo Express",
-        "Minikube",
-        "Secrets",
-        "ConfigMaps"
-      ],
-      "repo": "https://github.com/MonarchSharma20502/K8S-Mongo-Application",
-      "featured": true
-    },
-    {
-      "name": "Automation-in-Terraform",
-      "description": "Terraform automation modules for different IaaS and PaaS resources in Azure infrastructure.",
-      "tech": [
-        "Terraform",
         "Azure",
-        "IaC",
-        "Infrastructure Automation"
+        "Terraform",
+        "Databricks",
+        "Logic Apps",
+        "API Management",
+        "Event Hub",
+        "Infrastructure as Code"
       ],
-      "repo": "https://github.com/MonarchSharma20502/Automation-in-Terraform",
+      "repo": "https://github.com/MonarchSharma20502?tab=repositories",
       "featured": true
     },
     {
-      "name": "DevOps-Pipeline-Demonstration",
-      "description": "A practical project exploring DevOps pipeline concepts and application delivery.",
+      "name": "Internal Product (Celebal)",
+      "description": "Designed and maintained secure connectivity across Azure PaaS and IaaS services, implementing Managed Identities for reliable inter-service access. Configured RBAC and automated authentication using Service Principals, enabling secure access for applications and CI/CD pipelines.",
       "tech": [
-        "DevOps",
-        "CI/CD",
-        "Automation",
-        "Application Delivery"
-      ],
-      "repo": "https://github.com/MonarchSharma20502/DevOps-Pipeline-Demonstration",
-      "featured": true
-    },
-    {
-      "name": "Jenkins-k8s-Project",
-      "description": "A project combining Jenkins and Kubernetes concepts for automated build and deployment.",
-      "tech": [
-        "Jenkins",
-        "Kubernetes",
-        "CI/CD",
-        "Automation"
-      ],
-      "repo": "https://github.com/MonarchSharma20502/Jenkins-k8s-Project",
-      "featured": true
-    },
-    {
-      "name": "go-lang-web-application-devops",
-      "description": "Web application project for exploring application development and DevOps practices.",
-      "tech": [
-        "Go",
-        "Web Application",
-        "Docker",
-        "Kubernetes",
-        "DevOps"
-      ],
-      "repo": "https://github.com/MonarchSharma20502/go-lang-web-application-devops",
-      "featured": false
-    },
-    {
-      "name": "V-Profile-Project",
-      "description": "Multi-tier web application stack built and delivered through a DevOps pipeline.",
-      "tech": [
-        "Linux",
-        "DevOps",
-        "CI/CD",
-        "Automation"
-      ],
-      "repo": "https://github.com/MonarchSharma20502/V-Profile-Project",
-      "featured": false
-    },
-    {
-      "name": "Todo-Jenkins",
-      "description": "A Python to-do application used to practice Jenkins-driven CI/CD.",
-      "tech": [
-        "Python",
-        "Jenkins",
+        "Azure",
+        "Managed Identities",
+        "RBAC",
+        "Service Principals",
+        "Security",
         "CI/CD"
       ],
-      "repo": "https://github.com/MonarchSharma20502/Todo-Jenkins",
-      "featured": false
+      "repo": "https://github.com/MonarchSharma20502?tab=repositories",
+      "featured": true
     },
     {
-      "name": "Spiral-Animation-Python",
-      "description": "A colorful spiral animation generated with the Turtle graphics package in Python 3.",
+      "name": "AI Omni-Retriever",
+      "description": "Designed and implemented a RAG-based conversational AI on Azure using OpenAI, AI Search and Document Intelligence to deliver accurate, context-aware responses from enterprise data. Enhanced interactions with Azure Language Service for intent detection and intelligent workflow routing.",
       "tech": [
-        "Python",
-        "Turtle"
+        "Azure OpenAI",
+        "RAG",
+        "Azure AI Search",
+        "Document Intelligence",
+        "Azure Language Service",
+        "Conversational AI"
       ],
-      "repo": "https://github.com/MonarchSharma20502/Spiral-Animation-Python",
-      "featured": false
+      "repo": "https://github.com/MonarchSharma20502?tab=repositories",
+      "featured": true
     },
     {
-      "name": "4-in-a-row-graphics",
-      "description": "A 4-in-a-row game with graphics built using the Pygame library for Python.",
+      "name": "Data Platform (Hayya Qatar)",
+      "description": "Built a unified Azure data & AI platform for Hayya Qatar, enabling real-time KPIs and centralized analytics. Developed a conversational layer using Azure OpenAI and Cognitive Search to convert natural language into SQL insights and visualizations.",
       "tech": [
-        "Python",
-        "Pygame"
+        "Azure",
+        "Azure OpenAI",
+        "Cognitive Search",
+        "Real-time Analytics",
+        "KPIs",
+        "Natural Language to SQL"
       ],
-      "repo": "https://github.com/MonarchSharma20502/4-in-a-row-graphics",
-      "featured": false
-    },
-    {
-      "name": "Tic---Tac---Toe",
-      "description": "A classic Tic-Tac-Toe game implemented in Python.",
-      "tech": [
-        "Python"
-      ],
-      "repo": "https://github.com/MonarchSharma20502/Tic---Tac---Toe",
-      "featured": false
-    },
-    {
-      "name": "MonarchSharma20502",
-      "description": "About Me",
-      "tech": [],
-      "repo": "https://github.com/MonarchSharma20502/MonarchSharma20502",
-      "featured": false
-    },
-    {
-      "name": "Portfolio-Website",
-      "description": "This is my Portfolio Website",
-      "tech": [
-        "TypeScript"
-      ],
-      "repo": "https://github.com/MonarchSharma20502/Portfolio-Website",
-      "featured": false
+      "repo": "https://github.com/MonarchSharma20502?tab=repositories",
+      "featured": true
     }
   ],
   "education": [
