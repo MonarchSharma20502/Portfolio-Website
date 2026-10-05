@@ -40,7 +40,7 @@
   "philosophy": "Don't just learn the command. Understand what happens behind it.",
   "quote": "Infrastructure should be reproducible. Deployments should be automated.",
   "stats": {
-    "publicRepos": 15,
+    "publicRepos": 16,
     "followers": 8,
     "following": 4,
     "contributionsLastYear": 118,
@@ -53,11 +53,12 @@
     {
       "category": "Cloud & Infrastructure",
       "items": [
-        "Microsoft Azure",
+        "Microsoft AI Foundry",
+        "Azure AI Cognitive Services",
         "Azure DevOps",
-        "Terraform (IaC)",
-        "Cloud Networking",
-        "Cloud & Identity Security"
+        "Terraform (IaC) Automation",
+        "Azure Cloud Networking",
+        "Azure Integration Services"
       ]
     },
     {
@@ -66,7 +67,8 @@
         "Docker",
         "Kubernetes",
         "Minikube",
-        "Helm"
+        "Helm",
+        "Azure Kubernetes Service (AKS)"
       ]
     },
     {
@@ -75,36 +77,44 @@
         "GitHub Actions",
         "Jenkins",
         "CI/CD Pipelines",
-        "Infrastructure Automation"
+        "Release Management",
+        "Pipeline Management",
+        "PowerShell Automation",
+        "Shell Scripting"
       ]
     },
     {
       "category": "Languages",
       "items": [
         "Python",
-        "Go",
-        "JavaScript",
         "TypeScript",
         "HTML",
         "CSS",
-        "HCL"
+        "JavaScript",
+        "HCL",
+        "C++"
       ]
     },
     {
-      "category": "Tools & Platforms",
+      "category": "Version Control & Operating Systems",
       "items": [
         "Git",
         "GitHub",
-        "Linux",
-        "MongoDB",
-        "Mongo Express"
+        "Windows",
+        "Linux"
       ]
     },
     {
-      "category": "AI Tooling",
+      "category": "AI Tools",
       "items": [
         "Claude Code",
-        "AI-assisted Development"
+        "GitHub Copilot",
+        "ChatGPT",
+        "Claude",
+        "AI Agents",
+        "Agentic AI",
+        "Model Context Protocols",
+        "AI-Assisted Development"
       ]
     }
   ],

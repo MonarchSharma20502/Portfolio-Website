@@ -36,7 +36,7 @@ export default function Contact() {
       </ParallaxLayer>
 
       <Reveal>
-        <div className="rounded-3xl border border-slate-200 bg-gradient-to-br from-slate-50 to-white p-8 dark:border-slate-800 dark:from-slate-900 dark:to-slate-950 sm:p-12">
+        <div className="rounded-3xl border border-slate-300/70 bg-gradient-to-br from-slate-100 to-slate-50 p-8 dark:border-slate-800 dark:from-slate-900 dark:to-slate-950 sm:p-12">
           <p className="section-title">06 / Contact</p>
           <h2 className="mt-2 text-2xl font-bold tracking-tight sm:text-3xl">
             Let&rsquo;s connect

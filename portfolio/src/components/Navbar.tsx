@@ -50,7 +50,7 @@ export default function Navbar() {
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: hidden ? -80 : 0, opacity: 1 }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      className="fixed inset-x-0 top-0 z-50 border-b border-slate-200/70 bg-white/80 backdrop-blur-md dark:border-slate-800/70 dark:bg-slate-950/80"
+      className="fixed inset-x-0 top-0 z-50 border-b border-slate-300/70 bg-white/85 backdrop-blur-md dark:border-slate-800/70 dark:bg-slate-950/80"
     >      <nav
         className="mx-auto flex h-16 w-full max-w-5xl items-center justify-between px-6 sm:px-8"
         aria-label="Main navigation"

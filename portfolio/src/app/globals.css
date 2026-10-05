@@ -5,6 +5,13 @@
 :root {
   --background: 255 255 255;
   --foreground: 15 23 42;
+
+  /* Light-theme surfaces. The page stays white but cards sit on a tinted
+     panel so their edges and shadows are actually readable. */
+  --surface: 248 250 252;       /* slate-50 */
+  --surface-strong: 241 245 249; /* slate-100 */
+  --line: 203 213 225;          /* slate-300 — visible against white */
+  --line-soft: 226 232 240;     /* slate-200 */
 }
 
 html {
@@ -46,14 +53,14 @@ body {
   }
 
   .card {
-    @apply rounded-2xl border border-slate-200 bg-white/80 p-6 shadow-sm transition
-           hover:-translate-y-1 hover:shadow-lg hover:border-slate-300
+    @apply rounded-2xl border border-slate-300/70 bg-slate-50/90 p-6 shadow-sm ring-1 ring-black/[0.02] transition
+           hover:-translate-y-1 hover:border-slate-400/80 hover:shadow-xl hover:ring-black/[0.04]
            dark:border-slate-800 dark:bg-slate-900/60 dark:hover:border-slate-700;
   }
 
   .chip {
-    @apply inline-flex items-center rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700
-           transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.04]
+    @apply inline-flex items-center rounded-full border border-slate-300/80 bg-slate-100/90 px-3 py-1 text-xs font-medium text-slate-700
+           transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.04] hover:border-slate-400
            dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300;
   }
 
@@ -64,14 +71,20 @@ body {
   }
 
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700
-           transition hover:bg-slate-100 active:scale-[0.97]
-           dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800;
+    @apply inline-flex items-center justify-center gap-2 rounded-lg border border-slate-400/80 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700
+           transition hover:bg-slate-100 hover:border-slate-500 active:scale-[0.97]
+           dark:border-slate-700 dark:bg-transparent dark:text-slate-200 dark:hover:bg-slate-800;
   }
 
   .nav-link {
     @apply text-sm font-medium text-slate-600 transition hover:text-slate-900
            dark:text-slate-300 dark:hover:text-white;
+  }
+
+  /* Faint inner highlight that gives light-theme panels a sense of depth,
+     without changing their size or layout. */
+  .panel-sheen {
+    box-shadow: inset 0 1px 0 0 rgb(255 255 255 / 0.7);
   }
 }
 

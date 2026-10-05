@@ -21,7 +21,7 @@ export default function Skills() {
           <Reveal key={group.category} delay={i * 0.06}>
             <SpotlightBorder className="h-full rounded-2xl">
               <DepthCard
-                className="h-full rounded-2xl border border-slate-200 bg-white/80 p-6 shadow-sm transition-colors duration-300 hover:border-slate-300 dark:border-slate-800 dark:bg-slate-900/60 dark:hover:border-slate-700"
+                className="h-full rounded-2xl border border-slate-300/70 bg-slate-50/90 p-6 shadow-sm transition-colors duration-300 hover:border-slate-400/80 dark:border-slate-800 dark:bg-slate-900/60 dark:hover:border-slate-700"
                 max={5}
               >
                 <div className="depth-content relative">
@@ -30,7 +30,7 @@ export default function Skills() {
                   </h3>
                   <span
                     aria-hidden="true"
-                    className="mt-3 block h-px w-full bg-gradient-to-r from-slate-200 via-slate-200 to-transparent dark:from-slate-700 dark:via-slate-700"
+                    className="mt-3 block h-px w-full bg-gradient-to-r from-slate-300 via-slate-300 to-transparent dark:from-slate-700 dark:via-slate-700"
                   />
                   <div className="mt-4 flex flex-wrap gap-2">
                     {group.items.map((item) => (
