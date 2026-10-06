@@ -216,6 +216,74 @@
       ],
       "repo": "https://github.com/MonarchSharma20502?tab=repositories",
       "featured": true
+    },
+    {
+      "name": "Portfolio-Website",
+      "description": "This is my Portfolio Website",
+      "tech": [
+        "TypeScript"
+      ],
+      "repo": "https://github.com/MonarchSharma20502/Portfolio-Website",
+      "featured": false
+    },
+    {
+      "name": "Tic---Tac---Toe",
+      "description": "Tic---Tac---Toe — see the repository for details.",
+      "tech": [
+        "Python"
+      ],
+      "repo": "https://github.com/MonarchSharma20502/Tic---Tac---Toe",
+      "featured": false
+    },
+    {
+      "name": "TerraForge",
+      "description": "The product creates Enterprise level IaC Automation Codes using Hashi-Corp Terraform",
+      "tech": [
+        "Go"
+      ],
+      "repo": "https://github.com/MonarchSharma20502/TerraForge",
+      "featured": false
+    },
+    {
+      "name": "MonarchSharma20502",
+      "description": "About Me",
+      "tech": [],
+      "repo": "https://github.com/MonarchSharma20502/MonarchSharma20502",
+      "featured": false
+    },
+    {
+      "name": "Spiral-Animation-Python",
+      "description": "This Repository consists a Spiral Animation of different colors using TURTLE package of Python-3",
+      "tech": [
+        "Python"
+      ],
+      "repo": "https://github.com/MonarchSharma20502/Spiral-Animation-Python",
+      "featured": false
+    },
+    {
+      "name": "K8S-Mongo-Application",
+      "description": "(Mongo Database + Mongo Express Frontend Application) on Kubernetes Cluster using Minikube.",
+      "tech": [],
+      "repo": "https://github.com/MonarchSharma20502/K8S-Mongo-Application",
+      "featured": false
+    },
+    {
+      "name": "go-lang-web-application-devops",
+      "description": "go-lang-web-application-devops — see the repository for details.",
+      "tech": [
+        "HTML"
+      ],
+      "repo": "https://github.com/MonarchSharma20502/go-lang-web-application-devops",
+      "featured": false
+    },
+    {
+      "name": "Automation-in-Terraform",
+      "description": "This Repository consists the automation modules for different IaaC and PaaS in Azure infrastructure.",
+      "tech": [
+        "HCL"
+      ],
+      "repo": "https://github.com/MonarchSharma20502/Automation-in-Terraform",
+      "featured": false
     }
   ],
   "education": [
