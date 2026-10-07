@@ -73,7 +73,7 @@ export default function Education() {
                   return (
                     <li
                       key={i}
-                      className={`flex items-center gap-3 rounded-xl border border-slate-300/70 bg-slate-50/80 px-4 py-3 text-sm text-slate-700 dark:border-slate-700/60 dark:bg-slate-800/40 dark:text-slate-200 ${
+                      className={`flex items-center gap-3 rounded-xl border border-slate-200 bg-white/50 px-4 py-3 text-sm text-slate-700 dark:border-slate-700/60 dark:bg-slate-800/40 dark:text-slate-200 ${
                         spansFull ? "sm:col-span-2" : ""
                       }`}
                     >
