@@ -341,6 +341,42 @@
       ],
       "repo": "https://github.com/MonarchSharma20502/Automation-in-Terraform",
       "featured": false
+    },
+    {
+      "name": "Todo-Jenkins",
+      "description": "Todo-Jenkins — see the repository for details.",
+      "tech": [
+        "Python"
+      ],
+      "repo": "https://github.com/MonarchSharma20502/Todo-Jenkins",
+      "featured": false
+    },
+    {
+      "name": "V-Profile-Project",
+      "description": "V-Profile-Project — see the repository for details.",
+      "tech": [
+        "CSS"
+      ],
+      "repo": "https://github.com/MonarchSharma20502/V-Profile-Project",
+      "featured": false
+    },
+    {
+      "name": "DevOps-Pipeline-Demonstration",
+      "description": "DevOps-Pipeline-Demonstration — see the repository for details.",
+      "tech": [
+        "HTML"
+      ],
+      "repo": "https://github.com/MonarchSharma20502/DevOps-Pipeline-Demonstration",
+      "featured": false
+    },
+    {
+      "name": "4-in-a-row-graphics",
+      "description": "A 4 in a row game with graphics using pygame library of python.",
+      "tech": [
+        "Python"
+      ],
+      "repo": "https://github.com/MonarchSharma20502/4-in-a-row-graphics",
+      "featured": false
     }
   ],
   "education": [
