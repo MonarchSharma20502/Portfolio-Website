@@ -154,18 +154,24 @@ async function main() {
     const ranked = rankRepos(repos);
     const auto = ranked.map(repoToProject);
 
-    // Keep any project the user explicitly featured in profile.json, then
-    // append auto-discovered repos the curated list does not already name.
-    const curatedNames = new Set(
-      (existing.projects || []).map((p) => p.name)
-    );
-    const merged = [
-      ...(existing.projects || []),
-      ...auto.filter((p) => !curatedNames.has(p.name)),
-    ].slice(0, 12);
+    // Curated projects (anything already in profile.json, including every
+    // project you hand-marked featured) are kept verbatim and in order — the
+    // daily sync must never delete or reorder work you curated by hand.
+    const curated = existing.projects || [];
+    const curatedNames = new Set(curated.map((p) => p.name));
 
-    fresh.projects = merged;
-    console.log(`  repos: ${ranked.length} active -> ${merged.length} listed`);
+    // Only repos that are NOT already curated get appended, and only up to
+    // this many, so the "More experiments" list stays tidy without ever
+    // pushing a curated project off the end of the array.
+    const MAX_AUTO = 8;
+    const autoAdded = auto
+      .filter((p) => !curatedNames.has(p.name))
+      .slice(0, MAX_AUTO);
+
+    fresh.projects = [...curated, ...autoAdded];
+    console.log(
+      `  repos: ${ranked.length} active -> ${curated.length} curated + ${autoAdded.length} auto`
+    );
   }
 
   // ---- LinkedIn (optional) -------------------------------------------------

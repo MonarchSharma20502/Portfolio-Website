@@ -218,7 +218,6 @@
       "featured": true
     },
     {
-<<<<<<< HEAD
       "name": "Terraform Azure Automation",
       "description": "Reusable Terraform modules for provisioning IaaS and PaaS resources across Azure infrastructure, so environments are spun up consistently instead of being configured by hand.",
       "tech": [
@@ -269,7 +268,8 @@
       ],
       "repo": "https://github.com/MonarchSharma20502/go-lang-web-application-devops",
       "featured": true
-=======
+    },
+    {
       "name": "Portfolio-Website",
       "description": "This is my Portfolio Website",
       "tech": [
@@ -315,7 +315,12 @@
     {
       "name": "K8S-Mongo-Application",
       "description": "(Mongo Database + Mongo Express Frontend Application) on Kubernetes Cluster using Minikube.",
-      "tech": [],
+      "tech": [
+        "Kubernetes",
+        "MongoDB",
+        "Minikube",
+        "Docker"
+      ],
       "repo": "https://github.com/MonarchSharma20502/K8S-Mongo-Application",
       "featured": false
     },
@@ -336,7 +341,6 @@
       ],
       "repo": "https://github.com/MonarchSharma20502/Automation-in-Terraform",
       "featured": false
->>>>>>> 2ca8edf16c1481f7dd32c1c72e0988f6346bc302
     }
   ],
   "education": [
